@@ -1,0 +1,35 @@
+.DayPicker_transitionContainer {
+  overflow: scroll !important;
+}
+
+.DateRangePicker_picker  {
+  position: relative !important;
+  order: 10;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100%;
+}
+
+.DayPicker_transitionContainer, .DayPicker_transitionContainer_1, .DayPicker_transitionContainer__vertical, .DayPicker_transitionContainer__vertical_2 {
+  overflow: scroll !important;
+}
+
+.DayPickerNavigation_button {
+  display: none !important;
+}
+.DayPickerNavigation {
+  display: none !important;
+}
+
+.DateRangePickerInput {
+  display: flex !important;
+  flex-wrap: wrap;
+}
+
+.DateInput, .DateInput_1, .DateInput_1 {
+  width: 50% !important;
+}
+
+.DateRangePickerInput_arrow, .DateRangePickerInput_arrow_1 {
+  display: none !important;
+}
