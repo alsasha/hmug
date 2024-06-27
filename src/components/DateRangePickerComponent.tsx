@@ -3,7 +3,6 @@ import { DateRangePicker, FocusedInputShape } from 'react-dates';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment';
-import './DateRangePickerComponent.scss';
 
 type Props = {
     startDate: moment.Moment | null
