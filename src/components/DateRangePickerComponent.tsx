@@ -9,9 +9,10 @@ type Props = {
     setStartDate: (date: moment.Moment | null) => void
     endDate: moment.Moment | null
     setEndDate: (date: moment.Moment | null) => void
+    togglePopup: () => void
 }
 
-const DateRangePickerComponent = ({ startDate, setStartDate, endDate, setEndDate }: Props) => {
+const DateRangePickerComponent = ({ startDate, setStartDate, endDate, setEndDate, togglePopup }: Props) => {
     const [focusedInput, setFocusedInput] = useState<FocusedInputShape | null>('startDate');
     const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
@@ -19,6 +20,10 @@ const DateRangePickerComponent = ({ startDate, setStartDate, endDate, setEndDate
         setStartDate(startDate);
         setEndDate(focusedInput === 'startDate' ? null : endDate);
         setFocusedInput(endDate ? 'startDate' : 'endDate');
+        if (endDate) {
+            togglePopup()
+        }
+        // todo - ?
     };
 
     const handleFocusChange = (focused: FocusedInputShape | null) => {
@@ -30,13 +35,13 @@ const DateRangePickerComponent = ({ startDate, setStartDate, endDate, setEndDate
     };
 
     return (
-        <div>
+        <div className={`date-range-picker-wrapper date-range-picker-wrapper-${focusedInput}`}>
             <DateRangePicker
                 startDatePlaceholderText="Departure"
                 endDatePlaceholderText="Return"
                 block
                 openDirection="up"
-                keepOpenOnDateSelect
+                // keepOpenOnDateSelect
                 startDate={startDate}
                 startDateId="your_unique_start_date_id"
                 endDate={endDate}
@@ -48,7 +53,7 @@ const DateRangePickerComponent = ({ startDate, setStartDate, endDate, setEndDate
                 numberOfMonths={12}
                 verticalHeight={400}
             />
-            <button className="close-button" onClick={handleClick}>Close</button>
+            {/*<button className="close-button" onClick={handleClick}>Close</button>*/}
         </div>
     );
 };

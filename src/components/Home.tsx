@@ -87,10 +87,11 @@ const Home: React.FC = () => {
                     {isOpen && (
                         <div className={`popup ${isClosing ? 'closing' : ''}`} ref={popupRef}>
                             <div className="popup-content">
-                                <button onClick={togglePopup} className="close-button">Close</button>
+                                {/*<button onClick={togglePopup} className="close-button">Close</button>*/}
                                 <DateRangePickerComponent
                                     startDate={startDate} setStartDate={setStartDate}
                                     endDate={endDate} setEndDate={setEndDate}
+                                    togglePopup={togglePopup}
                                 />
                             </div>
                         </div>

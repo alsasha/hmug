@@ -7,7 +7,8 @@
   order: 10;
   bottom: 0 !important;
   left: 0 !important;
-  width: 100%;
+  width: 100% !important;
+  margin: 15px auto 0;
 }
 
 .DayPicker_transitionContainer, .DayPicker_transitionContainer_1, .DayPicker_transitionContainer__vertical, .DayPicker_transitionContainer__vertical_2 {
@@ -28,8 +29,107 @@
 
 .DateInput, .DateInput_1, .DateInput_1 {
   width: 50% !important;
+  background: transparent !important;
+  margin-bottom: 15px;
 }
 
 .DateRangePickerInput_arrow, .DateRangePickerInput_arrow_1 {
   display: none !important;
+}
+
+.DateInput input, .DateInput_1 input {
+  padding: 11px 13px;
+  border-radius: 10px;
+  border: 2px solid #6D9773;
+  background: #FFF;
+
+  color: #9DA9B7;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.DateInput:first-child {
+  padding-right: 4px;
+}
+
+.DateInput:nth-child(4) {
+  padding-left: 4px;
+}
+
+.DateInput input::placeholder, .DateInput_1 input::placeholder {
+  color: #9DA9B7;
+}
+
+.DateRangePickerInput__withBorder {
+  border: none !important;
+}
+
+.DateInput_fang {
+  display: none;
+}
+
+.DateInput:first-child input, .DateInput:first-child input::placeholder {
+  color: #9DA9B7;
+}
+.date-range-picker-wrapper-startDate {
+  .DateInput:nth-child(4) input, .DateInput:nth-child(4) input::placeholder {
+    color: #9DA9B7;
+  }
+  .DateInput:first-child input, .DateInput:first-child input::placeholder {
+    color: #0C131D;
+  }
+}
+
+.date-range-picker-wrapper-endDate {
+  .DateInput:nth-child(4) input, .DateInput:nth-child(4) input::placeholder {
+    color: #0C131D;
+  }
+  .DateInput:first-child input, .DateInput:first-child input::placeholder {
+    color: #9DA9B7;
+  }
+}
+
+.DateRangePickerInput {
+  background: transparent !important;
+}
+
+.CalendarMonth, .CalendarMonth_1 {
+  border-radius: 10px;
+  background: #FFF;
+}
+
+.CalendarMonthGrid {
+  background: transparent;
+}
+
+.DayPickerKeyboardShortcuts_buttonReset {
+  display: none;
+}
+
+.DateRangePicker_picker, .DayPicker {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.CalendarMonthGrid {
+  border-radius: 10px !important;
+  background: transparent !important;
+  margin-top: 40px !important;
+}
+
+.DayPicker_weekHeader {
+  top: 0 !important;
+  padding: 13px !important;
+  border-radius: 10px 10px 0 0 !important;
+  background: #FFF !important;
+}
+
+.CalendarMonthGrid_month__hideForAnimation {
+  padding-top: 42px !important;
+}
+
+.CalendarMonthGrid > div:nth-child(2) > div {
+  border-radius: 0 !important;
 }
