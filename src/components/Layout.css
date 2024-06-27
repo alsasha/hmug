@@ -7,7 +7,58 @@
     margin: 0 auto; /* Для центрирования компонента */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Опционально: тень для визуального отделения */
     border: 1px solid #ddd; /* Опционально: рамка */
-    overflow: hidden; /* Чтобы скрыть содержимое, выходящее за границы */
+    overflow: scroll; /* Чтобы скрыть содержимое, выходящее за границы */
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 393px;
+    display: flex;
+    justify-content: space-around;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+    border-top: 0.5px solid #B3B3B3;
+}
+
+.footer-button {
+    border: none;
+    width: 50%;
+    cursor: pointer;
+    transition: opacity 0.3s;
+
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+
+    color: #99A0AA;
+    text-align: center;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    background: white;
+}
+
+.footer-button path {
+    fill: #99A0AA;
+}
+
+.footer-button:hover {
+    opacity: 0.5;
+}
+
+.footer-button-active {
+    color: #0C3B2E;
+}
+
+.footer-button-active path {
+    fill: #0C3B2E;
 }

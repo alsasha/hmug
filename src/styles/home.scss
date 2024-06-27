@@ -1,0 +1,61 @@
+.header-icon-button {
+  display: flex;
+  padding: 11px 13px;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  border-radius: 10px;
+  background: #FFF;
+
+  color: #05291D;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  transition: all 0.3s ease-out;
+}
+
+.header-icon-button:hover {
+  opacity: 0.9;
+}
+
+.header-wrapper {
+  padding: 90px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #006659;
+  border-radius: 20px;
+}
+
+.header-logo {
+  margin-bottom: 40px;
+}
+
+.header-title {
+  color: #FFF;
+  font-style: normal;
+  font-size: 30px;
+  line-height: 36.9px;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.header-subtitle {
+  color: #FFF;
+  text-align: center;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.header-icon-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.home-wrapper {
+  padding-bottom: 70px;
+}

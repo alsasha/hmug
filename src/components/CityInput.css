@@ -1,0 +1,69 @@
+/* CityInput.css */
+.city-input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 20px;
+    width: 100%;
+    border-radius: 10px;
+    background: #FFF;
+    position: relative;
+}
+
+.city-input {
+    width: 100%;
+    max-width: 393px;
+    height: 40px;
+    border-radius: 10px;
+    padding: 4px 88px 4px 14px;
+    border: none;
+    outline: none;
+
+    color: #9DA9B7;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.city-input::placeholder {
+    color: #9DA9B7;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.submit-button {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    bottom: 4px;
+    border: none;
+    /*height: 40px;*/
+    /*width: 40px;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -50px;
+    cursor: pointer;
+    border-radius: 6px;
+    background: #DAF50F;
+    width: 80px;
+    /*height: 40px;*/
+    flex-shrink: 0;
+    transition: all 0.3s ease-out;
+}
+
+.submit-button:hover {
+    background: #A8B836;
+}
+
+.error-message {
+    color: tomato;
+    margin: 6px 6px 0;
+    font-size: 10px;
+    text-align: left;
+    align-self: flex-start;
+}

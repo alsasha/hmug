@@ -1,0 +1,86 @@
+/* Banners.css */
+.banners-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 10px;
+    scrollbar-width: none; /* Скрыть прокрутку в Firefox */
+    -ms-overflow-style: none;  /* Скрыть прокрутку в IE и Edge */
+}
+
+.banners-container::-webkit-scrollbar {
+    display: none; /* Скрыть прокрутку в Chrome, Safari и Opera */
+}
+
+.banner {
+    flex: 0 0 auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    background-color: #8D8D86;
+
+    width: 351px;
+    height: 345px;
+    border-radius: 20px;
+}
+
+.banner-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.banner-header h2 {
+    color: #FFF;
+    font-size: 23px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 2px;
+}
+
+.banner h3 {
+    color: #FFF;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    align-self: flex-start;
+}
+
+.banner-icon {
+    font-size: 24px;
+}
+
+.banner-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+.banner-button {
+    margin-top: auto;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    height: 48px;
+    padding: 14px 84px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #474D4F;
+    color: #FFF;
+    text-align: center;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
