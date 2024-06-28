@@ -21,3 +21,106 @@
   font-size: 16px;
   width: 100%;
 }
+
+.citizenship-popup {
+  background: white;
+  .travelers-form {
+    padding-bottom: 0;
+  }
+
+  .popup-content {
+    padding: 15px 0 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .travelers-form h2 {
+    padding-bottom: 18px;
+    border: none;
+  }
+
+  .travelers-form {
+    border-bottom: 1px solid #CDD4DE;
+    padding-bottom: 15px;
+  }
+
+  .search-input-container {
+    max-width: 351px;
+    display: flex;
+    width: 351px;
+    padding: 8px 10px;
+    align-items: center;
+    gap: 8px;
+    border-radius: 10px;
+    background: #EEEEF0;
+
+    input {
+      cursor: text;
+      color: #0C131D;
+
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+    }
+
+    input::placeholder {
+      color: #9DA9B7;
+    }
+  }
+
+  .search-icon {
+    margin: 0;
+  }
+
+  .country-select {
+    padding: 13px 21px;
+    background: #EEEFF3;
+    height: 100%;
+
+    ul {
+      max-width: 351px;
+      width: 100%;
+      margin: 0 auto;
+      background: white;
+      border-radius: 10px;
+
+      max-height: calc(74vh - 130px);
+      overflow: scroll;
+    }
+
+    li {
+      cursor: pointer;
+      transition: all 0.3s ease-out;
+      padding: 10px 13px;
+      display: flex;
+      gap: 18px;
+      color: #0C131D;
+      align-items: center;
+
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+
+      & > div:first-child {
+        font-size: 23px;
+      }
+    }
+
+    li:hover {
+      background: #F5F5F5;
+    }
+  }
+
+  .empty-countries {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    box-sizing: border-box;
+    background: #EFF1F4;
+  }
+}
+

@@ -1,6 +1,6 @@
 .header-icon-button {
   display: flex;
-  padding: 11px 13px;
+  padding: 11px 12px;
   align-items: center;
   gap: 6px;
   cursor: pointer;
@@ -13,6 +13,30 @@
   font-weight: 500;
   line-height: normal;
   transition: all 0.3s ease-out;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.header-icon-button-dates {
+  flex: 4;
+}
+
+.header-icon-button-profile {
+  flex: 2;
+  min-width: 115px;
+}
+
+.header-icon-button-citizenship {
+  flex: 1;
+  min-width: 60px;
 }
 
 .header-icon-button:hover {
@@ -54,6 +78,8 @@
   display: flex;
   gap: 10px;
   margin-top: 10px;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .home-wrapper {
@@ -68,6 +94,6 @@
 
 .header-icon-buttons-selected-dates {
   display: flex;
-  gap: 2px;
+  gap: 4px;
   align-items: center;
 }

@@ -7,10 +7,11 @@ import DateRangePickerComponent from './DateRangePickerComponent';
 import Layout from "./Layout";
 import moment from "moment/moment";
 import CityInput from "./CityInput";
-import {Classes} from "../types/types";
+import {Classes, CountryType} from "../types/types";
 import Banners from "./Banners";
 import {cities} from "../constants/cities";
 import ProfilePopup from "./ProfilePopup";
+import CitizenshipPopup from "./CitizenshipPopup";
 
 // todo добавить при клике на самолет чтобы дергались кнопки тоже если там что-то не заполнено
 const Home: React.FC = () => {
@@ -20,8 +21,13 @@ const Home: React.FC = () => {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [isProfileClosing, setIsProfileClosing] = useState(false);
 
+    const [isCitizenshipOpen, setIsCitizenshipOpen] = useState(false);
+    const [isCitizenshipClosing, setIsCitizenshipClosing] = useState(false);
+
     const popupRef = useRef<HTMLDivElement>(null);
     const popupProfileRef = useRef<HTMLDivElement>(null);
+    const popupCitizenshipRef = useRef<HTMLDivElement>(null);
+
     const [startDateSelected, setStartDateSelected] = useState<moment.Moment | null>(null);
     const [endDateSelected, setEndDateSelected] = useState<moment.Moment | null>(null);
 
@@ -30,11 +36,13 @@ const Home: React.FC = () => {
     const [travelers, setTravelers] = useState(1)
     const [selectedClass, setSelectedClass] = useState<Classes>(Classes.Economy)
 
+    const [citizenship, setCitizenship] = useState<CountryType | null>(null)
 
     const [inputValue, setInputValue] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
     const datesRef = useRef<HTMLDivElement>(null);
+    const citizenshipRef = useRef<HTMLDivElement>(null);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -55,22 +63,34 @@ const Home: React.FC = () => {
         // todo check dates
         if (!cityExists) {
             hasError = true
-            if (datesRef.current) {
-                datesRef.current.classList.add('shake');
+            if (inputRef.current) {
+                console.log('===>1232323')
+                inputRef.current.classList.add('shake');
                 setTimeout(() => {
-                    datesRef.current && datesRef.current.classList.remove('shake');
+                    inputRef.current && inputRef.current.classList.remove('shake');
                 }, 500);
             }
             // todo нужно ли ?
             // setErrorMessage('City not found');
         }
 
+        if (!citizenship) {
+            hasError = true
+
+            if (citizenshipRef.current) {
+                citizenshipRef.current.classList.add('shake');
+                setTimeout(() => {
+                    citizenshipRef.current && citizenshipRef.current.classList.remove('shake');
+                }, 500);
+            }
+        }
+
         if (!startDateSelected || !endDateSelected) {
             hasError = true
-            if (inputRef.current) {
-                inputRef.current.classList.add('shake');
+            if (datesRef.current) {
+                datesRef.current.classList.add('shake');
                 setTimeout(() => {
-                    inputRef.current && inputRef.current.classList.remove('shake');
+                    datesRef.current && datesRef.current.classList.remove('shake');
                 }, 500);
             }
         }
@@ -80,8 +100,7 @@ const Home: React.FC = () => {
             alert(`Город ${inputValue} найден!`);
         }
     };
-    console.log('===>startDateSelected', startDateSelected)
-    console.log('===>endDateSelected', endDateSelected)
+
     const togglePopup = () => {
         if (isOpen) {
             setIsClosing(true);
@@ -108,6 +127,18 @@ const Home: React.FC = () => {
         }
     };
 
+    const toggleCitizenshipPopup = () => {
+        if (isCitizenshipOpen) {
+            setIsCitizenshipClosing(true);
+            setTimeout(() => {
+                setIsCitizenshipOpen(false);
+                setIsCitizenshipClosing(false);
+            }, 500); // Длительность анимации закрытия
+        } else {
+            setIsCitizenshipOpen(true);
+        }
+    };
+
     const handleClickOutside = (event: MouseEvent) => {
         console.log('===>handleClickOutside')
         if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
@@ -118,6 +149,12 @@ const Home: React.FC = () => {
     const handleProfileClickOutside = (event: MouseEvent) => {
         if (popupProfileRef.current && !popupProfileRef.current.contains(event.target as Node)) {
             toggleProfilePopup();
+        }
+    };
+
+    const handleCitizenshipClickOutside = (event: MouseEvent) => {
+        if (popupCitizenshipRef.current && !popupCitizenshipRef.current.contains(event.target as Node)) {
+            toggleCitizenshipPopup();
         }
     };
 
@@ -145,6 +182,18 @@ const Home: React.FC = () => {
             document.removeEventListener('mousedown', handleProfileClickOutside);
         };
     }, [isProfileOpen]);
+
+    useEffect(() => {
+        if (isCitizenshipOpen) {
+            document.addEventListener('mousedown', handleCitizenshipClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleCitizenshipClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleCitizenshipClickOutside);
+        };
+    }, [isCitizenshipOpen]);
 
     console.log('===>startDate', startDate)
     console.log('===>endDate', endDate)
@@ -174,25 +223,28 @@ const Home: React.FC = () => {
                         errorMessage={errorMessage}
                     />
                     <div className="header-icon-buttons">
-                        <div ref={datesRef} className="header-icon-button" onClick={togglePopup}>
+                        <div ref={datesRef} className="header-icon-button header-icon-button-dates" onClick={togglePopup}>
                             <img src={calendarIcon} alt="calendar icon"/>
                             <span className="header-icon-buttons-selected-dates">{startDateSelected && endDateSelected ? (
                                     <>
                                         <span>{startDateSelected.format('D MMM')}</span>
-                                        <div className="divider" />
-                                        <span>{endDateSelected.format('D MMM')}</span>
-                                    </>
+
+                                            <span className="divider"/>
+<span>
+                                        {endDateSelected.format('D MMM')}
+                                        </span>
+                                        </>
                                 )
                                 : 'Dates'}
                             </span>
                         </div>
-                        <div onClick={toggleProfilePopup} className="header-icon-button">
+                        <div onClick={toggleProfilePopup} className="header-icon-button header-icon-button-profile">
                             <img src={profileIcon} alt="profile icon"/>
                             <span>{travelers}, {selectedClass}</span>
                         </div>
-                        <div className="header-icon-button">
+                        <div ref={citizenshipRef} onClick={toggleCitizenshipPopup} className="header-icon-button header-icon-button-citizenship">
                             <img src={passport} alt="passport icon"/>
-                            <span>Citizenship</span>
+                            <span>{citizenship ? citizenship.flag : 'Citizenship'}</span>
                         </div>
                     </div>
                 </header>
@@ -238,6 +290,16 @@ const Home: React.FC = () => {
                     travelers={travelers}
                     setTravelers={setTravelers}
                     onDone={toggleProfilePopup}
+                />
+
+                <CitizenshipPopup
+
+                 isOpen={isCitizenshipOpen}
+                    isClosing={isCitizenshipClosing}
+                    popupRef={popupCitizenshipRef}
+                    citizenship={citizenship}
+                     setCitizenship={setCitizenship}
+                    onDone={toggleCitizenshipPopup}
                 />
             </div>
         </Layout>

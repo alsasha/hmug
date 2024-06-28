@@ -40,6 +40,7 @@
         border: none;
         border-radius: 50%;
         cursor: pointer;
+        background: transparent;
 
         &:hover {
           opacity: 0.9;
@@ -111,6 +112,7 @@
 
 
 .profile-popup {
+  background: white;
   .popup-content {
     padding: 26px 0;
   }
