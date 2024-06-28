@@ -7,22 +7,26 @@ import moment from 'moment';
 type Props = {
     startDate: moment.Moment | null
     setStartDate: (date: moment.Moment | null) => void
+    setStartDateSelected: (date: moment.Moment | null) => void
     endDate: moment.Moment | null
     setEndDate: (date: moment.Moment | null) => void
+    setEndDateSelected: (date: moment.Moment | null) => void
     togglePopup: () => void
 }
 
-const DateRangePickerComponent = ({ startDate, setStartDate, endDate, setEndDate, togglePopup }: Props) => {
+const DateRangePickerComponent = ({ startDate, setStartDate, endDate, setEndDate, togglePopup, setStartDateSelected, setEndDateSelected }: Props) => {
     const [focusedInput, setFocusedInput] = useState<FocusedInputShape | null>('startDate');
     const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
     const handleDatesChange = ({ startDate, endDate }: { startDate: moment.Moment | null, endDate: moment.Moment | null }) => {
         setStartDate(startDate);
+        setStartDateSelected(startDate)
         setEndDate(focusedInput === 'startDate' ? null : endDate);
+        setEndDateSelected(focusedInput === 'startDate' ? null : endDate)
         setFocusedInput(endDate ? 'startDate' : 'endDate');
-        if (endDate) {
-            togglePopup()
-        }
+        // if (endDate) {
+        //     togglePopup()
+        // }
         // todo - ?
     };
 
@@ -52,6 +56,10 @@ const DateRangePickerComponent = ({ startDate, setStartDate, endDate, setEndDate
                 orientation="vertical"
                 numberOfMonths={12}
                 verticalHeight={400}
+                firstDayOfWeek={1}
+                // onGetPrevScrollableMonths={() => {
+                //     console.log('===>onGetPrevScrollableMonths')
+                // }}
             />
             {/*<button className="close-button" onClick={handleClick}>Close</button>*/}
         </div>

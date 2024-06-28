@@ -1,0 +1,117 @@
+.travelers-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    padding-bottom: 11px;
+
+    color: #0C131D;
+    text-align: center;
+
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    border-bottom: 1px solid #CDD4DE;
+    width: 100%;
+  }
+
+  .travelers-input-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .travelers-input {
+    display: flex;
+    align-items: center;
+    padding: 38px 18px;
+    gap: 76px;
+
+    .counter {
+      display: flex;
+      align-items: center;
+      width: 143px;
+      justify-content: space-between;
+
+      .counter-button {
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+
+      .counter-value {
+        color: #041C14;
+        text-align: center;
+
+        font-size: 23px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+    }
+  }
+
+  .travelers-input-left-top {
+    color: #041C14;
+
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .travelers-input-left-bottom {
+    color: #9EA9B7;
+
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+
+  .class-selector {
+    width: 100%;
+    max-width: 393px;
+    transition: all 0.3s ease-out;
+
+    .class-option {
+      padding: 18px 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      color: #041C14;
+
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 15px;
+
+      &.selected {
+        background-color: #E5E6D8;
+      }
+
+      &:hover {
+        background-color: #E5E6D8;
+      }
+
+      .check-mark {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+
+.profile-popup {
+  .popup-content {
+    padding: 26px 0;
+  }
+}

@@ -131,5 +131,42 @@
 }
 
 .CalendarMonthGrid > div:nth-child(2) > div {
-  border-radius: 0 !important;
+  border-radius: 0 0 10px 10px !important;
+}
+
+.DayPicker_weekHeader_li, .DayPicker_weekHeader_li_1 {
+  color: #9EA9B7;
+  text-align: center;
+
+  font-size: 11px !important;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.DayPicker_weekHeader_li:nth-child(6), .DayPicker_weekHeader_li:nth-child(7),  .DayPicker_weekHeader_li_1:nth-child(6), .DayPicker_weekHeader_li_1:nth-child(7) {
+  color: #0C131D;
+}
+
+.CalendarMonth_caption, .CalendarMonth_caption_1 {
+  padding-top: 15px !important;
+  padding-bottom: 12px !important;
+  padding-left: 4px !important;
+  text-align: left !important;
+  color: #0C131D;
+
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.CalendarDay__default {
+  border: none !important;
+  vertical-align: middle;
+}
+
+.CalendarMonthGrid > div {
+  margin-bottom: 10px !important;
 }
