@@ -1,0 +1,176 @@
+.accommodation-dropdown {
+  background-color: #fff;
+  width: 351px;
+  padding: 0 16px 15px;
+  margin: 0 auto;
+
+  .dropdown-header {
+    cursor: pointer;
+    border-top: 1px solid #E1E5EC;
+    padding-top: 15px;
+
+    .dropdown-title {
+      color: #0C131D;
+
+      font-size: 17px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
+
+    .dropdown-price {
+      color: #0C131D;
+      text-align: right;
+
+      font-size: 17px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
+
+    .dropdown-euro {
+      color: #9EA9B7;
+      text-align: right;
+
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+
+      align-self: start;
+    }
+
+    .dropdown-icon {
+      margin-right: 8px;
+      transition: transform 0.3s ease;
+      transform: rotate(270deg);
+
+      &.open {
+        transform: rotate(360deg);
+      }
+    }
+  }
+
+  .dropdown-description {
+    color: #0C131D;
+
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    max-width: 190px;
+    margin-right: auto;
+  }
+
+  .dropdown-list-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+
+    &.open {
+      max-height: 1000px;
+    }
+  }
+
+  .dropdown-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 8px 0 6px 0;
+
+    .dropdown-item {
+      padding: 0 0 0 20px;
+      cursor: pointer;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 4px;
+
+      color: #0C131D;
+
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      transition: all 0.3s ease-out;
+
+      svg {
+        margin: 0 14px 0 5px;
+        fill: #91918F;
+      }
+
+      &:hover, &.active {
+        color: #35C768;
+
+        svg {
+          fill: #35C768;
+        }
+      }
+
+      span:last-child {
+        margin-left: auto;
+      }
+    }
+  }
+
+  .checkout-button, .booking-button {
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: transparent;
+    padding: 0;
+  }
+
+  .checkout-button:hover, .booking-button:hover {
+    opacity: 0.8;
+  }
+
+  .checkout-button {
+    display: flex;
+    width: 100%;
+    height: 48px;
+    padding: 14px 0;
+    justify-content: center;
+    align-items: center;
+    background: #89FF6B;
+    margin-right: 10px;
+
+    color: #006659;
+    text-align: center;
+
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+
+  .dropdown-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+
+    .dropdown-title {
+      span {
+        margin-right: 8px;
+      }
+    }
+  }
+
+  .dropdown-header-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .bottom-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.accommodation-dropdown:first-of-type {
+  .dropdown-header {
+    border-top: none;
+  }
+}

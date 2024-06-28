@@ -60,6 +60,38 @@
     background: #A8B836;
 }
 
+.clear-button {
+    padding: 0;
+    position: absolute;
+    right: 10px;
+    top: 11px;
+    bottom: 10px;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.3s ease-out;
+}
+
+.clear-button:hover {
+    opacity: 0.8;
+}
+
+.back-button {
+    position: absolute;
+    left: 18px;
+    top: 8px;
+    bottom: 4px;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.3s ease-out;
+    padding: 0;
+}
+
+.back-button:hover {
+    opacity: 0.8;
+}
+
 .error-message {
     color: tomato;
     margin: 6px 6px 0;

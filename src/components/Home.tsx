@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useMemo} from 'react';
 import hmugLogo from '../assets/HMUGLogo.svg';
 import calendarIcon from '../assets/calendarIcon.svg';
 import profileIcon from '../assets/profileIcon.svg';
@@ -9,12 +9,16 @@ import moment from "moment/moment";
 import CityInput from "./CityInput";
 import {Classes, CountryType} from "../types/types";
 import Banners from "./Banners";
-import {cities} from "../constants/cities";
 import ProfilePopup from "./ProfilePopup";
 import CitizenshipPopup from "./CitizenshipPopup";
+import {SectionTypeWrapper} from "./SectionTypeWrapper";
+import {getCityData} from "../helpers/helpers";
+import {currencies} from "../constants/currencies";
 
 // todo добавить при клике на самолет чтобы дергались кнопки тоже если там что-то не заполнено
 const Home: React.FC = () => {
+    const [isResultState, setIsResultState] = useState(false)
+    const [selectedCityData, setSelectedCityData] = useState<{ section: Record<string, string>, currency: any} | null>(null)
     const [isOpen, setIsOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
 
@@ -55,9 +59,12 @@ const Home: React.FC = () => {
         }
     };
 
+    const personCurrency = useMemo(() => {
+        return currencies.find(({ name }) => name === citizenship?.name)?.symbol
+    }, [citizenship])
+
     const handleSubmit = () => {
-        const normalizedCity = inputValue.trim().toLowerCase();
-        const cityExists = cities.some(cityObj => cityObj.city === normalizedCity);
+        const cityExists = getCityData(inputValue);
         let hasError = false
 
         // todo check dates
@@ -97,7 +104,9 @@ const Home: React.FC = () => {
 
         if (!hasError) {
             setErrorMessage('');
-            alert(`Город ${inputValue} найден!`);
+            setIsResultState(true)
+            // @ts-ignore
+            setSelectedCityData(cityExists)
         }
     };
 
@@ -140,7 +149,6 @@ const Home: React.FC = () => {
     };
 
     const handleClickOutside = (event: MouseEvent) => {
-        console.log('===>handleClickOutside')
         if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
             togglePopup();
         }
@@ -158,6 +166,12 @@ const Home: React.FC = () => {
         }
     };
 
+    const handleClear = () => {
+        // todo спросить как должно работать ?
+        setInputValue('')
+        setIsResultState(false)
+    }
+
     useEffect(() => {
         if (isOpen) {
             document.addEventListener('mousedown', handleClickOutside);
@@ -169,7 +183,6 @@ const Home: React.FC = () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [isOpen]);
-
 
     useEffect(() => {
         if (isProfileOpen) {
@@ -195,45 +208,45 @@ const Home: React.FC = () => {
         };
     }, [isCitizenshipOpen]);
 
-    console.log('===>startDate', startDate)
-    console.log('===>endDate', endDate)
-
     const onCloseDatesDone = () => {
         togglePopup();
     }
 
-    //  inputRef: Ref<HTMLInputElement>
-    //     inputValue: string
-    //     handleChange: (val: ChangeEvent<HTMLInputElement>) => void
-    //     handleSubmit: () => void
-    //     errorMessage: string
     // @ts-ignore
     return (
         <Layout>
-            <div className="home-wrapper">
+            <div className={`home-wrapper ${isResultState ? 'home-wrapper-is-result' : ''}`}>
                 <header className="header-wrapper">
                     <img className="header-logo" src={hmugLogo} alt="HTUG Logo"/>
-                    <h1 className="header-title semi-bold-weight">Travel calculator</h1>
-                    <p className="header-subtitle">Let us do the math</p>
+                    {!isResultState && (
+                        <>
+                            <h1 className="header-title semi-bold-weight">Travel calculator</h1>
+                            <p className="header-subtitle">Let us do the math</p>
+                        </>
+                    )}
+
                     <CityInput
                         inputRef={inputRef}
                         inputValue={inputValue}
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
                         errorMessage={errorMessage}
+                        isResultState={isResultState}
+                        handleClear={handleClear}
                     />
                     <div className="header-icon-buttons">
-                        <div ref={datesRef} className="header-icon-button header-icon-button-dates" onClick={togglePopup}>
+                        <div ref={datesRef}
+                             className={`header-icon-button header-icon-button-dates ${startDateSelected && endDateSelected ? 'header-icon-button-dates-selected' : ''}`}
+                             onClick={togglePopup}>
                             <img src={calendarIcon} alt="calendar icon"/>
                             <span className="header-icon-buttons-selected-dates">{startDateSelected && endDateSelected ? (
                                     <>
                                         <span>{startDateSelected.format('D MMM')}</span>
-
                                             <span className="divider"/>
-<span>
+                                        <span>
                                         {endDateSelected.format('D MMM')}
                                         </span>
-                                        </>
+                                    </>
                                 )
                                 : 'Dates'}
                             </span>
@@ -242,21 +255,53 @@ const Home: React.FC = () => {
                             <img src={profileIcon} alt="profile icon"/>
                             <span>{travelers}, {selectedClass}</span>
                         </div>
-                        <div ref={citizenshipRef} onClick={toggleCitizenshipPopup} className="header-icon-button header-icon-button-citizenship">
+                        <div ref={citizenshipRef} onClick={toggleCitizenshipPopup}
+                             className={`header-icon-button header-icon-button-citizenship ${citizenship ? 'header-icon-button-citizenship-selected' : ''}`}
+                        >
                             <img src={passport} alt="passport icon"/>
                             <span>{citizenship ? citizenship.flag : 'Citizenship'}</span>
                         </div>
                     </div>
+                    {isResultState && (
+                        <div className="city-travel-info">
+                        <div className="city-travel-info-top">
+                            <div className="city-travel-info-top__left">
+                                <div className="city-travel-info-top__left__title">
+                                    Milan
+                                </div>
+                                <div className="city-travel-info-top__left__subtitle">
+                                    <span>
+                                       🇮🇹
+                                    </span>
+                                    <span>
+                                        Italy
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="city-travel-info-top__right">
+                                <div className="city-travel-info-top__right__title">
+                                    ₾ 5 626 GEL
+                                </div>
+                                <div className="city-travel-info-top__right__subtitle">
+                                    € 1 946 EUR
+                                </div>
+                            </div>
+                        </div>
+                        <div className="city-travel-info-bottom">
+                            <div className="city-travel-info-bottom-left">
+                                Passport control
+                            </div>
+                            <div className="city-travel-info-bottom-right">
+                                Visa-free | 90 days
+                            </div>
+                        </div>
+                    </div>)}
                 </header>
 
-                <Banners />
+                {!isResultState && <Banners/>}
 
-                <input
-                    type="text"
-                    readOnly
-                    value={startDate && endDate ? `${startDate.format('D MMM')} - ${endDate.format('D MMM')}` : 'Select Date Range'}
-                    onClick={togglePopup}
-                />
+                {isResultState && <SectionTypeWrapper personCurrency={personCurrency} selectedCityData={selectedCityData} />}
+
                 <div>
                     {isOpen && (
                         <div className={`popup ${isClosing ? 'closing' : ''}`} ref={popupRef}>

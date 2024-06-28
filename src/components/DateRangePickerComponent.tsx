@@ -20,10 +20,12 @@ const DateRangePickerComponent = ({ startDate, setStartDate, endDate, setEndDate
 
     const handleDatesChange = ({ startDate, endDate }: { startDate: moment.Moment | null, endDate: moment.Moment | null }) => {
         setStartDate(startDate);
-        setStartDateSelected(startDate)
         setEndDate(focusedInput === 'startDate' ? null : endDate);
-        setEndDateSelected(focusedInput === 'startDate' ? null : endDate)
         setFocusedInput(endDate ? 'startDate' : 'endDate');
+        if (endDate) {
+            setStartDateSelected(startDate)
+            setEndDateSelected(focusedInput === 'startDate' ? null : endDate)
+        }
         // if (endDate) {
         //     togglePopup()
         // }

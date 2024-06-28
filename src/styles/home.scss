@@ -27,6 +27,11 @@
 
 .header-icon-button-dates {
   flex: 4;
+  max-width: 100px;
+}
+
+.header-icon-button-dates-selected {
+  max-width: max-content;
 }
 
 .header-icon-button-profile {
@@ -35,8 +40,13 @@
 }
 
 .header-icon-button-citizenship {
-  flex: 1;
+  flex: 2;
+  min-width: 80px;
+}
+
+.header-icon-button-citizenship-selected {
   min-width: 60px;
+  max-width: 60px;
 }
 
 .header-icon-button:hover {
@@ -96,4 +106,110 @@
   display: flex;
   gap: 4px;
   align-items: center;
+}
+
+.home-wrapper-is-result {
+  background: #EEEFF3;
+  .header-wrapper {
+    padding: 24px 21px 10px;
+  }
+
+  .header-logo {
+    width: 56px;
+    margin-bottom: 32px;
+  }
+
+  .city-input-container {
+    margin-top: 0;
+  }
+
+  .city-input {
+    height: 49px;
+    padding: 8px 42px 8px 44px;
+  }
+}
+
+.city-travel-info {
+  width: 100%;
+  padding: 10px 14px;
+}
+
+.city-travel-info-top {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px 10px;
+  border-bottom: 1px solid #E1E5EC;
+}
+
+.city-travel-info-bottom {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 4px 0;
+}
+
+.city-travel-info-top__left__title {
+  color: #FFF;
+
+  font-size: 23px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.city-travel-info-top__left__subtitle {
+  color: #FFF;
+
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  span {
+    margin-right: 8px;
+  }
+}
+
+.city-travel-info-top__right__title {
+  color: #DAF50F;
+  text-align: right;
+
+  font-size: 23px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.city-travel-info-top__right__subtitle {
+  color: #FFF;
+  text-align: right;
+
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.city-travel-info-bottom-left {
+  color: #FFF;
+
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.city-travel-info-bottom-right {
+  color: #FFF;
+  text-align: right;
+
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.section-type-wrapper {
+  margin: 21px;
+  border-radius: 10px;
+  overflow: hidden;
 }

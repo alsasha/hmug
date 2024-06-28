@@ -94,6 +94,7 @@
       font-style: normal;
       font-weight: 500;
       line-height: 15px;
+      transition: all 0.3s ease-out;
 
       &.selected {
         background-color: #E5E6D8;
