@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState, useMemo} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import hmugLogo from '../assets/HMUGLogo.svg';
 import calendarIcon from '../assets/calendarIcon.svg';
 import profileIcon from '../assets/profileIcon.svg';
@@ -7,20 +7,26 @@ import DateRangePickerComponent from './DateRangePickerComponent';
 import Layout from "./Layout";
 import moment from "moment/moment";
 import CityInput from "./CityInput";
-import {Classes, CountryType} from "../types/types";
+import {Classes, CountryType, CurrenciesValuesType, SelectedCityType, SelectedSectionsType} from "../types/types";
 import Banners from "./Banners";
 import ProfilePopup from "./ProfilePopup";
 import CitizenshipPopup from "./CitizenshipPopup";
 import {SectionTypeWrapper} from "./SectionTypeWrapper";
 import {getCityData} from "../helpers/helpers";
 import {currencies} from "../constants/currencies";
+import {initialSectionTypesByClass} from "../constants/initialSectionTypes";
+import convertCurrency from "../services/services";
 
 // todo добавить при клике на самолет чтобы дергались кнопки тоже если там что-то не заполнено
 const Home: React.FC = () => {
     const [isResultState, setIsResultState] = useState(false)
-    const [selectedCityData, setSelectedCityData] = useState<{ section: Record<string, string>, currency: any} | null>(null)
+    const [selectedCityData, setSelectedCityData] = useState<SelectedCityType | undefined>(undefined)
     const [isOpen, setIsOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
+
+    const [currenciesValues, setCurrenciesValues] = useState<CurrenciesValuesType>({})
+
+    const [selectedSections, setSelectedSections] = useState<SelectedSectionsType>(initialSectionTypesByClass[Classes.Economy])
 
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [isProfileClosing, setIsProfileClosing] = useState(false);
@@ -60,9 +66,28 @@ const Home: React.FC = () => {
     };
 
     const personCurrency = useMemo(() => {
-        return currencies.find(({ name }) => name === citizenship?.name)?.symbol
+        return currencies.find(({ name }) => name === citizenship?.name)
     }, [citizenship])
 
+    const daysBetween = useMemo(() => {
+        if (endDateSelected && startDateSelected) {
+            return endDateSelected.diff(startDateSelected, 'days') + 1;
+        }
+        return 0
+    }, [endDateSelected, startDateSelected])
+
+    const totalAmountInDollars = useMemo(() => {
+        const selectedTypes = Object.values(selectedSections)
+        const totalAmountForOneDay =  Object.entries(selectedCityData?.sections || {}).reduce((acc, next) => {
+            const [sectionTypeName, value] = next
+            if (selectedTypes.includes(sectionTypeName)) {
+                const amountValue = value === '—' ? 0 : value
+                acc = acc + Number(amountValue)
+            }
+            return acc
+        }, 0)
+        return totalAmountForOneDay * daysBetween
+    }, [selectedSections, selectedCityData, daysBetween])
     const handleSubmit = () => {
         const cityExists = getCityData(inputValue);
         let hasError = false
@@ -71,7 +96,6 @@ const Home: React.FC = () => {
         if (!cityExists) {
             hasError = true
             if (inputRef.current) {
-                console.log('===>1232323')
                 inputRef.current.classList.add('shake');
                 setTimeout(() => {
                     inputRef.current && inputRef.current.classList.remove('shake');
@@ -172,6 +196,22 @@ const Home: React.FC = () => {
         setIsResultState(false)
     }
 
+    const fetchConversion = async (amount = 1, fromCurrency = 'USD', toCurrency = 'EUR') => {
+        try {
+            const result = await convertCurrency(amount, fromCurrency, toCurrency);
+            setCurrenciesValues((prev) => ({...prev, [fromCurrency]: result.rates }))
+            console.log('Converted Amount:', result.convertedAmount);
+            console.log('Exchange Rate:', result.rate);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        // todo add errors handle
+        fetchConversion();
+    }, []);
+
     useEffect(() => {
         if (isOpen) {
             document.addEventListener('mousedown', handleClickOutside);
@@ -267,23 +307,31 @@ const Home: React.FC = () => {
                         <div className="city-travel-info-top">
                             <div className="city-travel-info-top__left">
                                 <div className="city-travel-info-top__left__title">
-                                    Milan
+                                    {selectedCityData?.city}
                                 </div>
                                 <div className="city-travel-info-top__left__subtitle">
                                     <span>
-                                       🇮🇹
+                                        {selectedCityData?.country?.flag}
                                     </span>
                                     <span>
-                                        Italy
+                                        {selectedCityData?.country?.name}
                                     </span>
                                 </div>
                             </div>
                             <div className="city-travel-info-top__right">
                                 <div className="city-travel-info-top__right__title">
-                                    ₾ 5 626 GEL
+                                    {personCurrency?.symbol}
+                                    {' '}
+                                    {Math.round(totalAmountInDollars * (currenciesValues['USD'][personCurrency?.code || ''] || 0))}
+                                    {' '}
+                                    {personCurrency?.code}
                                 </div>
                                 <div className="city-travel-info-top__right__subtitle">
-                                    € 1 946 EUR
+                                    {selectedCityData?.currency?.symbol}
+                                    {' '}
+                                    {Math.round(totalAmountInDollars * (currenciesValues['USD'][selectedCityData?.currency?.code || ''] || 0))}
+                                    {' '}
+                                    {selectedCityData?.currency?.code}
                                 </div>
                             </div>
                         </div>
@@ -300,7 +348,14 @@ const Home: React.FC = () => {
 
                 {!isResultState && <Banners/>}
 
-                {isResultState && <SectionTypeWrapper personCurrency={personCurrency} selectedCityData={selectedCityData} />}
+                {isResultState && <SectionTypeWrapper
+                    personCurrency={personCurrency}
+                    selectedCityData={selectedCityData}
+                    selectedSections={selectedSections}
+                    setSelectedSections={setSelectedSections}
+                    daysBetween={daysBetween}
+                    currenciesValues={currenciesValues}
+                />}
 
                 <div>
                     {isOpen && (
@@ -332,6 +387,7 @@ const Home: React.FC = () => {
                     popupRef={popupProfileRef}
                     selectedClass={selectedClass}
                     setSelectedClass={setSelectedClass}
+                    setSelectedSections={setSelectedSections}
                     travelers={travelers}
                     setTravelers={setTravelers}
                     onDone={toggleProfilePopup}

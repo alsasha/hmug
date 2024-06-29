@@ -1,7 +1,8 @@
 import React, {Ref} from 'react';
 import './CityInput.css';
-import {Classes} from "../types/types";
+import {Classes, SelectedSectionsType} from "../types/types";
 import './TravelersForm.scss'
+import {initialSectionTypesByClass} from "../constants/initialSectionTypes";
 
 type Props = {
     isOpen: boolean
@@ -12,9 +13,10 @@ type Props = {
     travelers: number
     setTravelers: (value: number) => void
     onDone: () => void
+    setSelectedSections: (value: SelectedSectionsType) => void
 }
 
-const ProfilePopup = ({ isOpen, isClosing, popupRef, onDone, selectedClass, setSelectedClass, travelers, setTravelers }: Props)  => {
+const ProfilePopup = ({ isOpen, isClosing, popupRef, onDone, selectedClass, setSelectedClass, travelers, setTravelers, setSelectedSections }: Props)  => {
 
     const incrementTravelers = () => {
         // @ts-ignore
@@ -63,7 +65,10 @@ const ProfilePopup = ({ isOpen, isClosing, popupRef, onDone, selectedClass, setS
                                     <div
                                         key={className}
                                         className={`class-option ${selectedClass === className ? 'selected' : ''}`}
-                                        onClick={() => setSelectedClass(className as Classes)}
+                                        onClick={() => {
+                                            setSelectedClass(className as Classes)
+                                            setSelectedSections(initialSectionTypesByClass[className])
+                                        }}
                                     >
                                         {className}
                                         {selectedClass === className && (

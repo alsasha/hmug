@@ -154,6 +154,10 @@
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  
+  &:first-letter {
+    text-transform: uppercase;
+  }
 }
 
 .city-travel-info-top__left__subtitle {

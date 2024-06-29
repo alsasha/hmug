@@ -1,5 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import './AccommodationDropdown.scss';
+import {
+    CurrenciesValuesType,
+    CurrencyType,
+    SectionTypes,
+    SelectedCityType,
+    SelectedSectionsType
+} from "../types/types";
 
 const accommodationTypes = [
     'Hostel',
@@ -20,12 +27,16 @@ type Props = {
     siteType?: string
     siteUrl?: string
     svg?: React.ReactNode
-    selectedCityData?: any
-    personCurrency?: string
+    selectedCityData?: SelectedCityType
+    personCurrency?: CurrencyType
+    selectedSections?: SelectedSectionsType
+    setSelectedSections: (value: SelectedSectionsType) => void
+    daysBetween: number
+    currenciesValues: CurrenciesValuesType
 }
 
 const AccommodationDropdown = ({
-    title, icon, description, subtitles, siteType, siteUrl, svg, selectedCityData, personCurrency
+    title, icon, description, subtitles, siteType, siteUrl, svg, selectedCityData, personCurrency, selectedSections, setSelectedSections, daysBetween, currenciesValues
 }: Props) => {
     const [isOpen, setIsOpen] = useState(false);
     const [activeType, setActiveType] = useState<string>('2-Star Hotel');
@@ -35,7 +46,10 @@ const AccommodationDropdown = ({
     };
 
     const handleTypeClick = (type: string) => {
-        setActiveType(type);
+        // @ts-ignore
+        setSelectedSections((prev: SelectedSectionsType) => {
+            return ({...prev, [title as SectionTypes]: type}) as SelectedSectionsType
+        })
     };
 
     const onOpenSite = (url?: string) => {
@@ -43,6 +57,19 @@ const AccommodationDropdown = ({
             window.open(url, '_blank')
         }
     }
+
+    const sectionAmountInDollars = useMemo(() => {
+        const selectedType = selectedSections?.[title as SectionTypes]
+        if (selectedType) {
+            const res = selectedCityData?.sections?.[selectedType] === '—' ? 0 : selectedCityData?.sections?.[selectedType]
+            return Number(res || 0)
+        }
+        return 0
+    }, [selectedSections, title])
+
+    const amountForAllDaysInDollars = sectionAmountInDollars * daysBetween
+
+    const dropDownPrice = Math.round(amountForAllDaysInDollars * (currenciesValues['USD'][personCurrency?.code || ''] || 0))
 
     return (
         <div className="accommodation-dropdown">
@@ -56,7 +83,13 @@ const AccommodationDropdown = ({
                             {title}
                         </span>
                     </span>
-                    <span className="dropdown-price">₾ 1345 GEL</span>
+                    <span className="dropdown-price">
+                        {personCurrency?.symbol}
+                        {' '}
+                        {dropDownPrice}
+                        {' '}
+                        {personCurrency?.code}
+                    </span>
                 </div>
 
                 <div className="dropdown-header-bottom">
@@ -71,7 +104,13 @@ const AccommodationDropdown = ({
                         </svg>
                     </div>
                     <div className="dropdown-description">{description}</div>
-                    <span className="dropdown-euro">€ 463 EUR</span>
+                    <span className="dropdown-euro">
+                        {selectedCityData?.currency?.symbol}
+                        {' '}
+                        {Math.round(amountForAllDaysInDollars * (currenciesValues['USD'][selectedCityData?.currency?.code || ''] || 0))}
+                        {' '}
+                        {selectedCityData?.currency?.code}
+                    </span>
                 </div>
             </div>
             <div className={`dropdown-list-container ${isOpen ? 'open' : ''}`}>
@@ -79,7 +118,7 @@ const AccommodationDropdown = ({
                     {subtitles?.map(({ name: type }) => (
                         <li
                             key={type}
-                            className={`dropdown-item ${type === activeType ? 'active' : ''}`}
+                            className={`dropdown-item ${type === selectedSections?.[title as SectionTypes] ? 'active' : ''}`}
                             onClick={() => handleTypeClick(type)}
                         >
                             <svg width="5" height="4" viewBox="0 0 5 4" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -89,9 +128,13 @@ const AccommodationDropdown = ({
                                 {type}
                             </span>
                             <span>
-                                {selectedCityData?.sections?.[type] === '—' ? '' : personCurrency}
+                                {selectedCityData?.sections?.[type] === '—' ? '' : personCurrency?.symbol}
                                 {' '}
-                                {selectedCityData?.sections?.[type]}
+                                {selectedCityData?.sections?.[type] === '—' ? (
+                                    '—'
+                                ) : (
+                                    Math.round(Number(selectedCityData?.sections?.[type] === '—' ? 0 : selectedCityData?.sections?.[type] || 0) * (currenciesValues['USD'][personCurrency?.code || ''] || 0))
+                                )}
                             </span>
                         </li>
                     ))}

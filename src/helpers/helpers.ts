@@ -2,17 +2,6 @@ import {asiaDestinations, europe} from "../constants/destinations";
 import {currencies} from "../constants/currencies";
 import {countries} from "../constants/countries";
 
-enum SectionTypes {
-    Accommodation = 'Accommodation',
-    AirportTransfer = 'Airport Transfer',
-    DayTransport = 'Day to day transport',
-    eSIM = 'eSIM with data',
-    Food = 'Food',
-    Entertainment = 'Entertainment',
-    Nightlife = 'Nightlife',
-    OtherExpenses = 'Other expenses'
-}
-
 export const ACCOMMODATION_DESTINATION_FIELDS = {
     'Hostel': '1* Hotel',
     '2-Star Hotel': '2* Hotel',
@@ -119,12 +108,12 @@ export const getCityData = (inputValue: string) => {
 
             return acc
         }, {})
-        const cityObjectData = {
+        return {
             currency,
             sections,
-            country
+            country,
+            city: inputValue
         }
-        return cityObjectData
     }
 
     return ''

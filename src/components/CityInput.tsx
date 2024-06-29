@@ -14,6 +14,11 @@ type Props = {
 }
 
 const CityInput = ({ inputRef, inputValue, handleChange, handleSubmit, errorMessage, isResultState, handleClear }: Props)  => {
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            handleSubmit()
+        }
+    };
     return (
         <>
             <div className="city-input-container">
@@ -22,6 +27,7 @@ const CityInput = ({ inputRef, inputValue, handleChange, handleSubmit, errorMess
                     type="text"
                     value={inputValue}
                     onChange={handleChange}
+                    onKeyDown={handleKeyDown}
                     placeholder="Enter city"
                     className="city-input"
                 />

@@ -60,7 +60,6 @@ const DateRangePickerComponent = ({ startDate, setStartDate, endDate, setEndDate
                 verticalHeight={400}
                 firstDayOfWeek={1}
                 // onGetPrevScrollableMonths={() => {
-                //     console.log('===>onGetPrevScrollableMonths')
                 // }}
             />
             {/*<button className="close-button" onClick={handleClick}>Close</button>*/}

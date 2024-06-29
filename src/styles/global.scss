@@ -17,6 +17,10 @@ body, input, button {
   font-family: 'Clash Grotesk', sans-serif;
 }
 
+body {
+  overflow: hidden;
+}
+
 .light-weight {
   font-weight: 300;
 }
