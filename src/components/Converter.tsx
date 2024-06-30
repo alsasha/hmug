@@ -57,17 +57,16 @@ const Converter = ({ currenciesValues, setCurrenciesValues, fetchConversion }: P
         const currentSelectedSelect = value || selectedSelect
         const calculatingValue = currentSelectedSelect === SelectedSelect.First ? firstCurrencyValue : secondCurrencyValue
         const setCalculatingValue = currentSelectedSelect === SelectedSelect.First ? setFirstCurrencyValue : setSecondCurrencyValue
-        const setCalculatedValue = currentSelectedSelect === SelectedSelect.First ? setSecondCurrencyValue : setFirstCurrencyValue
         try {
-            let expression = calculatingValue.replaceAll('÷', '/').replaceAll('×', '*').replaceAll(',', '.');
+            let expression = calculatingValue
             const symbols = ['%', '÷', '×', '-', '+', ',']
             if (symbols.includes(expression[expression.length - 1])) {
                 expression = expression.slice(0, -1)
             }
+            expression = expression.replaceAll('÷', '/').replaceAll('×', '*').replaceAll(',', '.');
             const result = eval(expression); // Будьте осторожны с использованием eval
             const roundedResult = parseFloat(result.toFixed(2)); // округление до 2 знаков
             const replaced = roundedResult.toString().replace('.', ',')
-            // todo поставить во второе значение посчитанное по валюте
             setCalculatingValue(replaced);
         } catch {
             setCalculatingValue('0');
@@ -76,12 +75,25 @@ const Converter = ({ currenciesValues, setCurrenciesValues, fetchConversion }: P
 
     const handleClick = (value: string) => {
         const calculatingValue = selectedSelect === SelectedSelect.First ? firstCurrencyValue : secondCurrencyValue
+        const fromCurrency = selectedSelect === SelectedSelect.First ? firstCurrency : secondCurrency
+        const toCurrency = selectedSelect === SelectedSelect.First ? secondCurrency : firstCurrency
         const setCalculatingValue = selectedSelect === SelectedSelect.First ? setFirstCurrencyValue : setSecondCurrencyValue
         const setCalculatedValue = selectedSelect === SelectedSelect.First ? setSecondCurrencyValue : setFirstCurrencyValue
         if (value === 'C') {
             setCalculatingValue('0');
+            setCalculatedValue('0')
         } else if (value === '←') {
-            setCalculatingValue(calculatingValue.slice(0, -1) || '0');
+            const symbols = ['%', '÷', '×', '-', '+', ',']
+            const expression = calculatingValue.slice(0, -1) || '0'
+            if (symbols.includes(expression[expression.length - 1])) {
+                setCalculatingValue(expression);
+            } else {
+                const valueByCurrency = Number(expression) * currenciesValues[fromCurrency?.code || ''][toCurrency?.code || '']
+                const roundedResult = parseFloat(valueByCurrency.toFixed(2)); // округление до 2 знаков
+                const replaced = roundedResult.toString().replace('.', ',')
+                setCalculatingValue(expression);
+                setCalculatedValue(replaced)
+            }
         } else if (value === '=') {
             try {
                 let expression = calculatingValue.replaceAll('÷', '/').replaceAll('×', '*').replaceAll(',', '.');
@@ -92,10 +104,15 @@ const Converter = ({ currenciesValues, setCurrenciesValues, fetchConversion }: P
                 const result = eval(expression); // Будьте осторожны с использованием eval
                 const roundedResult = parseFloat(result.toFixed(2)); // округление до 2 знаков
                 const replaced = roundedResult.toString().replace('.', ',')
-                // todo поставить во второе значение посчитанное по валюте
                 setCalculatingValue(replaced);
+
+                const valueByCurrency = Number(roundedResult) * currenciesValues[fromCurrency?.code || ''][toCurrency?.code || '']
+                const roundedResultCalculated = parseFloat(valueByCurrency.toFixed(2)); // округление до 2 знаков
+                const replacedCalculated = roundedResultCalculated.toString().replace('.', ',')
+                setCalculatedValue(replacedCalculated)
             } catch {
                 setCalculatingValue('0');
+                setCalculatedValue('0')
             }
         } else {
             const symbolsValues = ['%', '÷', '×', '-', '+']
@@ -112,7 +129,11 @@ const Converter = ({ currenciesValues, setCurrenciesValues, fetchConversion }: P
                     return
                 }
             }
-            if (calculatingValue[calculatingValue.length - 1] === '0') {
+            const symbolsValuesWithComma = ['%', '÷', '×', '-', '+', ',']
+            if (calculatingValue[calculatingValue.length - 1] === '0' &&
+                ((calculatingValue[calculatingValue.length - 2] && symbolsValuesWithComma.includes(calculatingValue[calculatingValue.length - 2]))
+                || calculatingValue.length === 1)
+            ) {
                 if (value === '0' ||
                     value === '1' ||
                     value === '2' ||
@@ -125,15 +146,30 @@ const Converter = ({ currenciesValues, setCurrenciesValues, fetchConversion }: P
                     value === '9'
                 ) {
                     const calculatingValueSliced = calculatingValue.slice(0, -1)
-                    setCalculatingValue(calculatingValueSliced + value);
+                    const res = calculatingValueSliced + value
+                    setCalculatingValue(res);
+
+                    if (calculatingValue.split('').every((el) => !symbolsValues.includes(el))) {
+                        const clearedRes = res.replaceAll(',', '.')
+                        const valueByCurrency = Number(clearedRes) * currenciesValues[fromCurrency?.code || ''][toCurrency?.code || '']
+                        const roundedResultCalculated = parseFloat(valueByCurrency.toFixed(2)); // округление до 2 знаков
+                        const replacedCalculated = roundedResultCalculated.toString().replace('.', ',')
+                        setCalculatedValue(replacedCalculated)
+                    }
                 } else {
                     setCalculatingValue(calculatingValue + value);
                 }
             } else {
                 setCalculatingValue(calculatingValue + value);
+
+                if ((calculatingValue + value).split('').every((el) => !symbolsValues.includes(el))) {
+                    const clearedRes = (calculatingValue + value).replaceAll(',', '.')
+                    const valueByCurrency = Number(clearedRes) * currenciesValues[fromCurrency?.code || ''][toCurrency?.code || '']
+                    const roundedResultCalculated = parseFloat(valueByCurrency.toFixed(2)); // округление до 2 знаков
+                    const replacedCalculated = roundedResultCalculated.toString().replace('.', ',')
+                    setCalculatedValue(replacedCalculated)
+                }
             }
-            // todo поставить во второе значение посчитанное по валюте
-            // setCalculatedValue()
         }
     };
 
@@ -268,6 +304,7 @@ const Converter = ({ currenciesValues, setCurrenciesValues, fetchConversion }: P
                                 </div>
                             </div>
                             <div onClick={() => {
+                                // todo check
                                 onClickSame()
                                 setSelectedSelect(SelectedSelect.Second)
                             }} className="converter-result-wrapper">
