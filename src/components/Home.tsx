@@ -15,16 +15,17 @@ import {SectionTypeWrapper} from "./SectionTypeWrapper";
 import {getCityData} from "../helpers/helpers";
 import {currencies} from "../constants/currencies";
 import {initialSectionTypesByClass} from "../constants/initialSectionTypes";
-import convertCurrency from "../services/services";
 
-// todo добавить при клике на самолет чтобы дергались кнопки тоже если там что-то не заполнено
-const Home: React.FC = () => {
+type Props = {
+    currenciesValues: CurrenciesValuesType
+    setCurrenciesValues: (value: CurrenciesValuesType) => void
+}
+
+const Home = ({ currenciesValues, setCurrenciesValues }: Props)  => {
     const [isResultState, setIsResultState] = useState(false)
     const [selectedCityData, setSelectedCityData] = useState<SelectedCityType | undefined>(undefined)
     const [isOpen, setIsOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
-
-    const [currenciesValues, setCurrenciesValues] = useState<CurrenciesValuesType>({})
 
     const [selectedSections, setSelectedSections] = useState<SelectedSectionsType>(initialSectionTypesByClass[Classes.Economy])
 
@@ -195,22 +196,6 @@ const Home: React.FC = () => {
         setInputValue('')
         setIsResultState(false)
     }
-
-    const fetchConversion = async (amount = 1, fromCurrency = 'USD', toCurrency = 'EUR') => {
-        try {
-            const result = await convertCurrency(amount, fromCurrency, toCurrency);
-            setCurrenciesValues((prev) => ({...prev, [fromCurrency]: result.rates }))
-            console.log('Converted Amount:', result.convertedAmount);
-            console.log('Exchange Rate:', result.rate);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    useEffect(() => {
-        // todo add errors handle
-        fetchConversion();
-    }, []);
 
     useEffect(() => {
         if (isOpen) {
@@ -394,8 +379,7 @@ const Home: React.FC = () => {
                 />
 
                 <CitizenshipPopup
-
-                 isOpen={isCitizenshipOpen}
+                    isOpen={isCitizenshipOpen}
                     isClosing={isCitizenshipClosing}
                     popupRef={popupCitizenshipRef}
                     citizenship={citizenship}

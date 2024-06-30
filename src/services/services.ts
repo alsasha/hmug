@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-interface ConversionResult {
+export interface ConversionResult {
     convertedAmount: number;
     rate: number;
     rates: Record<string, number>

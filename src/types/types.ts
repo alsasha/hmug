@@ -14,6 +14,7 @@ export type CurrencyType = {
     currency: string,
     symbol: string,
     code: string
+    flag?: string
 }
 
 export type SelectedCityType = {
@@ -46,3 +47,8 @@ export type SelectedSectionsType = {
 }
 
 export type CurrenciesValuesType = Record<string, Record<string, number>>
+
+export enum SelectedSelect {
+    First = 'First',
+    Second = 'Second'
+}
