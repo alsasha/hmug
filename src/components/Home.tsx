@@ -55,6 +55,8 @@ const Home = ({ currenciesValues, setCurrenciesValues }: Props)  => {
     const datesRef = useRef<HTMLDivElement>(null);
     const citizenshipRef = useRef<HTMLDivElement>(null);
 
+    const [otherAmount, setOtherAmount] = useState(0)
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         // todo вопрос какие можно вводить - ?
@@ -340,6 +342,8 @@ const Home = ({ currenciesValues, setCurrenciesValues }: Props)  => {
                     setSelectedSections={setSelectedSections}
                     daysBetween={daysBetween}
                     currenciesValues={currenciesValues}
+                    otherAmount={otherAmount}
+                    setOtherAmount={setOtherAmount}
                 />}
 
                 <div>

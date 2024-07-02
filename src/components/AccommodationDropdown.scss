@@ -29,6 +29,22 @@
       line-height: normal;
     }
 
+    .dropdown-price-isOther {
+      display: flex;
+
+      input {
+        margin: 0;
+        padding: 0;
+        border: none;
+        color: #0C131D;
+        text-align: right;
+        font-size: 17px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+    }
+
     .dropdown-euro {
       color: #9EA9B7;
       text-align: right;
@@ -162,6 +178,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .dropdown-header-bottom-isOther {
+    svg {
+      fill: #91918F;
+      margin: 0 14px 0 5px;
+    }
   }
 
   .bottom-buttons {

@@ -11,9 +11,11 @@ type Props = {
     setSelectedSections: (value: SelectedSectionsType) => void
     daysBetween: number
     currenciesValues: CurrenciesValuesType
+    otherAmount: number
+    setOtherAmount: (value: number) => void
 }
 
-export const SectionTypeWrapper = ({ selectedCityData, personCurrency, selectedSections, setSelectedSections, daysBetween, currenciesValues }: Props) => {
+export const SectionTypeWrapper = ({ selectedCityData, personCurrency, selectedSections, setSelectedSections, daysBetween, currenciesValues, otherAmount, setOtherAmount }: Props) => {
     return <div className="section-type-wrapper">
         {sectionTypes.map((item) => {
             return (
@@ -25,6 +27,8 @@ export const SectionTypeWrapper = ({ selectedCityData, personCurrency, selectedS
                         setSelectedSections={setSelectedSections}
                         daysBetween={daysBetween}
                         currenciesValues={currenciesValues}
+                        otherAmount={otherAmount}
+                        setOtherAmount={setOtherAmount}
                         {...item}
                     />
                 </React.Fragment>

@@ -83,7 +83,7 @@
       max-width: 351px;
       width: 100%;
       margin: 0 auto;
-      border-radius: 0 0 10px 10px;
+      border-radius: 10px;
       max-height: calc(74vh - 130px);
       overflow: scroll;
     }
@@ -103,7 +103,6 @@
       line-height: normal;
 
       & > div:first-child {
-        // todo
         font-size: 23px;
         width: 46px;
       }
@@ -113,15 +112,7 @@
       background: #F5F5F5;
     }
 
-    li:nth-child(1),
-    li:nth-child(3) {
-      border-radius: 10px 10px 0 0;
-    }
 
-    li:nth-child(2) {
-      border-radius: 0 0 10px 10px;
-      margin-bottom: 10px;
-    }
   }
 
   .empty-countries {
@@ -153,6 +144,22 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+  }
+
+  .country-select {
+    li:nth-child(1),
+    li:nth-child(3) {
+      border-radius: 10px 10px 0 0;
+    }
+
+    li:nth-child(2) {
+      border-radius: 0 0 10px 10px;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      border-radius: 0 0 10px 10px;
+    }
   }
 }
 
