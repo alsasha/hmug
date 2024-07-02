@@ -14,6 +14,29 @@ type Props = {
     onDone: () => void
 }
 
+const sortedCurrencies = currencies.sort((a, b) => {
+    if (a.code === 'EUR') {
+        return -1; // a (EUR) должен быть первым
+    } else if (b.code === 'EUR') {
+        return 1; // b (EUR) должен быть первым
+    } else if (a.code === 'USD') {
+        return -1; // a (USD) должен быть вторым
+    } else if (b.code === 'USD') {
+        return 1; // b (USD) должен быть вторым
+    } else {
+        // Все остальные случаи сортировки по алфавиту
+        let codeA = a.code.toUpperCase();
+        let codeB = b.code.toUpperCase();
+        if (codeA < codeB) {
+            return -1;
+        }
+        if (codeA > codeB) {
+            return 1;
+        }
+        return 0;
+    }
+})
+
 const CurrencyPopup = ({ isOpen, isClosing, popupRef, onDone, selectedCurrency, setSelectedCurrency }: Props)  => {
     const [currency, setCurrency] = useState<string>('');
 
@@ -32,7 +55,7 @@ const CurrencyPopup = ({ isOpen, isClosing, popupRef, onDone, selectedCurrency, 
 
     const filteredCountries = useMemo(() => {
         const normalizedCurrency = currency.trim().toLowerCase();
-        return currencies.filter(currencyObj => currencyObj.currency.toLowerCase().includes(normalizedCurrency));
+        return sortedCurrencies.filter(currencyObj => currencyObj.currency.toLowerCase().includes(normalizedCurrency))
     }, [currency])
 
     return (

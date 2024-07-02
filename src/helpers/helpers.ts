@@ -1,5 +1,5 @@
 import {asiaDestinations, europe} from "../constants/destinations";
-import {currencies} from "../constants/currencies";
+import {currenciesWithCountries} from "../constants/currenciesWithCountries";
 import {countries} from "../constants/countries";
 
 export const ACCOMMODATION_DESTINATION_FIELDS = {
@@ -95,7 +95,7 @@ export const getCityData = (inputValue: string) => {
     const foundCity = europeCity || asiaCity
 
     if (foundCity) {
-        const currency = currencies.find(({ name }) => name === foundCity.Country)
+        const currency = currenciesWithCountries.find(({ name }) => name === foundCity.Country)
         const country = countries.find(({ name }) => name === foundCity.Country)
         const sections = Object.entries(foundCity).reduce((acc, next) => {
             const [key, amount] = next

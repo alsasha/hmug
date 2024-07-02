@@ -54,12 +54,12 @@
 }
 
 .header-wrapper {
-  padding: 90px 22px 22px;
+  padding: 36px 22px 22px;
   display: flex;
   flex-direction: column;
   align-items: center;
   background: #006659;
-  border-radius: 20px;
+  border-radius: 0 0 20px 20px;
 }
 
 .header-logo {
@@ -93,8 +93,8 @@
 }
 
 .home-wrapper {
-  padding-bottom: 70px;
-  height: 100%;
+  margin-bottom: 66px;
+  height: auto;
 }
 
 .divider {

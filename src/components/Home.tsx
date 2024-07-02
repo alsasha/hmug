@@ -13,7 +13,7 @@ import ProfilePopup from "./ProfilePopup";
 import CitizenshipPopup from "./CitizenshipPopup";
 import {SectionTypeWrapper} from "./SectionTypeWrapper";
 import {getCityData} from "../helpers/helpers";
-import {currencies} from "../constants/currencies";
+import {currenciesWithCountries} from "../constants/currenciesWithCountries";
 import {initialSectionTypesByClass} from "../constants/initialSectionTypes";
 
 type Props = {
@@ -67,7 +67,7 @@ const Home = ({ currenciesValues, setCurrenciesValues }: Props)  => {
     };
 
     const personCurrency = useMemo(() => {
-        return currencies.find(({ name }) => name === citizenship?.name)
+        return currenciesWithCountries.find(({ name }) => name === citizenship?.name)
     }, [citizenship])
 
     const daysBetween = useMemo(() => {

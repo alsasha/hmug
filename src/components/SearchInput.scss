@@ -83,9 +83,7 @@
       max-width: 351px;
       width: 100%;
       margin: 0 auto;
-      background: white;
-      border-radius: 10px;
-
+      border-radius: 0 0 10px 10px;
       max-height: calc(74vh - 130px);
       overflow: scroll;
     }
@@ -97,6 +95,7 @@
       display: flex;
       color: #0C131D;
       align-items: center;
+      background: white;
 
       font-size: 15px;
       font-style: normal;
@@ -112,6 +111,16 @@
 
     li:hover {
       background: #F5F5F5;
+    }
+
+    li:nth-child(1),
+    li:nth-child(3) {
+      border-radius: 10px 10px 0 0;
+    }
+
+    li:nth-child(2) {
+      border-radius: 0 0 10px 10px;
+      margin-bottom: 10px;
     }
   }
 

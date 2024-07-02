@@ -1,14 +1,6 @@
 // todo спросить - бывают ли флаги валют ? - todo переделать в массив где только валюты
 
-export const currencies = [
-    {
-        "name": "Vatican City (Holy See)",
-        "country": "VA",
-        "currency": "Euro",
-        "symbol": "€",
-        "code": "EUR",
-        "flag": "🇪🇺"
-    },
+export const currenciesWithCountries = [
     {
         "name": "Afghanistan",
         "country": "AF",
@@ -32,6 +24,14 @@ export const currencies = [
         "symbol": "د.ج",
         "code": "DZD",
         "flag": "🇩🇿"
+    },
+    {
+        "name": "Andorra",
+        "country": "AD",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇦🇩"
     },
     {
         "name": "Angola",
@@ -72,6 +72,14 @@ export const currencies = [
         "symbol": "A$",
         "code": "AUD",
         "flag": "🇦🇺"
+    },
+    {
+        "name": "Austria",
+        "country": "AT",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇦🇹"
     },
     {
         "name": "Azerbaijan",
@@ -120,6 +128,14 @@ export const currencies = [
         "symbol": "Br",
         "code": "BYN",
         "flag": "🇧🇾"
+    },
+    {
+        "name": "Belgium",
+        "country": "BE",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇧🇪"
     },
     {
         "name": "Belize",
@@ -328,6 +344,14 @@ export const currencies = [
         "flag": "🇨🇺"
     },
     {
+        "name": "Cyprus",
+        "country": "CY",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇨🇾"
+    },
+    {
         "name": "Czech Republic",
         "country": "CZ",
         "currency": "Czech Koruna",
@@ -368,12 +392,35 @@ export const currencies = [
         "flag": "🇩🇴"
     },
     {
+        "name": "East Timor (Timor-Leste)",
+        "country": "TL",
+        "currency": "US Dollar",
+        "symbol": "$",
+        "code": "USD"
+    },
+    {
+        "name": "Ecuador",
+        "country": "EC",
+        "currency": "US Dollar",
+        "symbol": "$",
+        "code": "USD",
+        "flag": "🇪🇨"
+    },
+    {
         "name": "Egypt",
         "country": "EG",
         "currency": "Egyptian Pound",
         "symbol": "E£",
         "code": "EGP",
         "flag": "🇪🇬"
+    },
+    {
+        "name": "El Salvador",
+        "country": "SV",
+        "currency": "US Dollar",
+        "symbol": "$",
+        "code": "USD",
+        "flag": "🇸🇻"
     },
     {
         "name": "Equatorial Guinea",
@@ -390,6 +437,14 @@ export const currencies = [
         "symbol": "Nfk",
         "code": "ERN",
         "flag": "🇪🇷"
+    },
+    {
+        "name": "Estonia",
+        "country": "EE",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇪🇪"
     },
     {
         "name": "Eswatini (fmr. Swaziland)",
@@ -413,6 +468,22 @@ export const currencies = [
         "symbol": "FJ$",
         "code": "FJD",
         "flag": "🇫🇯"
+    },
+    {
+        "name": "Finland",
+        "country": "FI",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇫🇮"
+    },
+    {
+        "name": "France",
+        "country": "FR",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇫🇷"
     },
     {
         "name": "Gabon",
@@ -439,12 +510,28 @@ export const currencies = [
         "flag": "🇬🇪"
     },
     {
+        "name": "Germany",
+        "country": "DE",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇩🇪"
+    },
+    {
         "name": "Ghana",
         "country": "GH",
         "currency": "Ghanaian Cedi",
         "symbol": "₵",
         "code": "GHS",
         "flag": "🇬🇭"
+    },
+    {
+        "name": "Greece",
+        "country": "GR",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇬🇷"
     },
     {
         "name": "Grenada",
@@ -558,12 +645,28 @@ export const currencies = [
         "flag": "🇮🇶"
     },
     {
+        "name": "Ireland",
+        "country": "IE",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇮🇪"
+    },
+    {
         "name": "Israel",
         "country": "IL",
         "currency": "Israeli Shekel",
         "symbol": "₪",
         "code": "ILS",
         "flag": "🇮🇱"
+    },
+    {
+        "name": "Italy",
+        "country": "IT",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇮🇹"
     },
     {
         "name": "Jamaica",
@@ -630,6 +733,13 @@ export const currencies = [
         "flag": "🇰🇷"
     },
     {
+        "name": "Kosovo",
+        "country": "XK",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR"
+    },
+    {
         "name": "Kuwait",
         "country": "KW",
         "currency": "Kuwaiti Dinar",
@@ -652,6 +762,14 @@ export const currencies = [
         "symbol": "₭",
         "code": "LAK",
         "flag": "🇱🇦"
+    },
+    {
+        "name": "Latvia",
+        "country": "LV",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇱🇻"
     },
     {
         "name": "Lebanon",
@@ -694,6 +812,22 @@ export const currencies = [
         "flag": "🇱🇮"
     },
     {
+        "name": "Lithuania",
+        "country": "LT",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇱🇹"
+    },
+    {
+        "name": "Luxembourg",
+        "country": "LU",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇱🇺"
+    },
+    {
         "name": "Madagascar",
         "country": "MG",
         "currency": "Malagasy Ariary",
@@ -734,6 +868,22 @@ export const currencies = [
         "flag": "🇲🇱"
     },
     {
+        "name": "Malta",
+        "country": "MT",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇲🇹"
+    },
+    {
+        "name": "Marshall Islands",
+        "country": "MH",
+        "currency": "US Dollar",
+        "symbol": "$",
+        "code": "USD",
+        "flag": "🇲🇭"
+    },
+    {
         "name": "Mauritania",
         "country": "MR",
         "currency": "Mauritanian Ouguiya",
@@ -758,6 +908,14 @@ export const currencies = [
         "flag": "🇲🇽"
     },
     {
+        "name": "Micronesia",
+        "country": "FM",
+        "currency": "US Dollar",
+        "symbol": "$",
+        "code": "USD",
+        "flag": "🇫🇲"
+    },
+    {
         "name": "Moldova",
         "country": "MD",
         "currency": "Moldovan Leu",
@@ -766,12 +924,28 @@ export const currencies = [
         "flag": "🇲🇩"
     },
     {
+        "name": "Monaco",
+        "country": "MC",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇲🇨"
+    },
+    {
         "name": "Mongolia",
         "country": "MN",
         "currency": "Mongolian Tugrik",
         "symbol": "₮",
         "code": "MNT",
         "flag": "🇲🇳"
+    },
+    {
+        "name": "Montenegro",
+        "country": "ME",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇲🇪"
     },
     {
         "name": "Morocco",
@@ -819,6 +993,14 @@ export const currencies = [
         "symbol": "₨",
         "code": "NPR",
         "flag": "🇳🇵"
+    },
+    {
+        "name": "Netherlands",
+        "country": "NL",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇳🇱"
     },
     {
         "name": "New Zealand",
@@ -885,6 +1067,14 @@ export const currencies = [
         "flag": "🇵🇰"
     },
     {
+        "name": "Palau",
+        "country": "PW",
+        "currency": "US Dollar",
+        "symbol": "$",
+        "code": "USD",
+        "flag": "🇵🇼"
+    },
+    {
         "name": "Panama",
         "country": "PA",
         "currency": "Panamanian Balboa",
@@ -931,6 +1121,14 @@ export const currencies = [
         "symbol": "zł",
         "code": "PLN",
         "flag": "🇵🇱"
+    },
+    {
+        "name": "Portugal",
+        "country": "PT",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇵🇹"
     },
     {
         "name": "Qatar",
@@ -997,6 +1195,14 @@ export const currencies = [
         "flag": "🇼🇸"
     },
     {
+        "name": "San Marino",
+        "country": "SM",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇸🇲"
+    },
+    {
         "name": "Sao Tome and Principe",
         "country": "ST",
         "currency": "Dobra",
@@ -1053,6 +1259,22 @@ export const currencies = [
         "flag": "🇸🇬"
     },
     {
+        "name": "Slovakia",
+        "country": "SK",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇸🇰"
+    },
+    {
+        "name": "Slovenia",
+        "country": "SI",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇸🇮"
+    },
+    {
         "name": "Solomon Islands",
         "country": "SB",
         "currency": "Solomon Islands Dollar",
@@ -1083,6 +1305,14 @@ export const currencies = [
         "symbol": "SSP",
         "code": "SSP",
         "flag": "🇸🇸"
+    },
+    {
+        "name": "Spain",
+        "country": "ES",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR",
+        "flag": "🇪🇸"
     },
     {
         "name": "Sri Lanka",
@@ -1284,7 +1514,13 @@ export const currencies = [
         "code": "VUV",
         "flag": "🇻🇺"
     },
-
+    {
+        "name": "Vatican City (Holy See)",
+        "country": "VA",
+        "currency": "Euro",
+        "symbol": "€",
+        "code": "EUR"
+    },
     {
         "name": "Venezuela",
         "country": "VE",

@@ -6,7 +6,6 @@
     max-height: 100vh;
     margin: 0 auto; /* Для центрирования компонента */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Опционально: тень для визуального отделения */
-    border: 1px solid #ddd; /* Опционально: рамка */
     overflow: scroll; /* Чтобы скрыть содержимое, выходящее за границы */
     display: flex;
     flex-direction: column;
@@ -49,10 +48,6 @@
 
 .footer-button path {
     fill: #99A0AA;
-}
-
-.footer-button:hover {
-    opacity: 0.5;
 }
 
 .footer-button-active {
