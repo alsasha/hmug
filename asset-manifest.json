@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/hmug/static/css/main.876dd9ac.css",
+    "main.css": "/hmug/static/css/main.509e5a85.css",
     "main.js": "/hmug/static/js/main.5e0a40f6.js",
     "static/js/453.02052fa6.chunk.js": "/hmug/static/js/453.02052fa6.chunk.js",
     "static/media/marketingBanner1.png": "/hmug/static/media/marketingBanner1.9ce6c18f43989429d2bd.png",
@@ -13,12 +13,12 @@
     "static/media/calendarIcon.svg": "/hmug/static/media/calendarIcon.5a6f9636c2b63f3d6e6a2b5dba5fbb8c.svg",
     "index.html": "/hmug/index.html",
     "static/media/profileIcon.svg": "/hmug/static/media/profileIcon.4189d5797c311dd056b4f55e123b6113.svg",
-    "main.876dd9ac.css.map": "/hmug/static/css/main.876dd9ac.css.map",
+    "main.509e5a85.css.map": "/hmug/static/css/main.509e5a85.css.map",
     "main.5e0a40f6.js.map": "/hmug/static/js/main.5e0a40f6.js.map",
     "453.02052fa6.chunk.js.map": "/hmug/static/js/453.02052fa6.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.876dd9ac.css",
+    "static/css/main.509e5a85.css",
     "static/js/main.5e0a40f6.js"
   ]
 }
