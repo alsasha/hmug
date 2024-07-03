@@ -5,7 +5,7 @@ export enum Classes {
 }
 
 export type CountryType = {
-    name: string, country: string, flag: string
+    name: string, country: string, flag: string, languageCode: string
 }
 
 export type CurrencyType = {

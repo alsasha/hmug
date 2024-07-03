@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import hmugLogo from '../assets/HMUGLogo.svg';
 import calendarIcon from '../assets/calendarIcon.svg';
 import profileIcon from '../assets/profileIcon.svg';
@@ -12,7 +12,7 @@ import Banners from "./Banners";
 import ProfilePopup from "./ProfilePopup";
 import CitizenshipPopup from "./CitizenshipPopup";
 import {SectionTypeWrapper} from "./SectionTypeWrapper";
-import {getCityData} from "../helpers/helpers";
+import {generateAiraloUrl, generateBookingUrl, getCityData, getUberUrl} from "../helpers/helpers";
 import {currenciesWithCountries} from "../constants/currenciesWithCountries";
 import {initialSectionTypesByClass} from "../constants/initialSectionTypes";
 import {ConversionResult} from "../services/services";
@@ -258,6 +258,43 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion }: Props)
         }
     }, [isResultState]); // Пустой массив зависимостей гарантирует, что этот эффект выполнится только один раз при монтировании
 
+    const bookingUrl = useMemo(() => {
+        const params = {
+            city: selectedCityData?.city,
+            region: '',
+            country: selectedCityData?.country?.name,
+            fromDate: startDateSelected?.format('YYYY-MM-DD'),
+            toDate: endDateSelected?.format('YYYY-MM-DD'),
+            adults: travelers,
+            personCountryCode: citizenship?.country,
+            personCurrency: personCurrency?.code
+        }
+        return generateBookingUrl(params);
+    }, [selectedCityData, startDateSelected, endDateSelected, travelers, citizenship, personCurrency])
+
+    const airaloUrl = useMemo(() => {
+        const params = {
+            country: selectedCityData?.country?.name,
+        }
+        return generateAiraloUrl(params)
+    }, [selectedCityData, citizenship])
+
+    const uberUrl = useMemo(() => {
+        return getUberUrl({ countryCode: selectedCityData?.country?.country, langCode: citizenship?.country })
+    }, [selectedCityData, citizenship])
+
+    const onBookingClick = useCallback(() => {
+        window.open(bookingUrl, '_blank')
+    }, [bookingUrl])
+
+    const onAiraloClick = useCallback(() => {
+        window.open(airaloUrl, '_blank')
+    }, [airaloUrl])
+
+    const onUberClick = useCallback(() => {
+        window.open(uberUrl, '_blank')
+    }, [uberUrl])
+
     // @ts-ignore
     return (
         <Layout>
@@ -364,6 +401,9 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion }: Props)
                     otherAmount={otherAmount}
                     setOtherAmount={setOtherAmount}
                     otherAmountInCountryCurrency={otherAmountInCountryCurrency}
+                    onBookingClick={onBookingClick}
+                    onAiraloClick={onAiraloClick}
+                    onUberClick={onUberClick}
                 />}
 
                 <div>

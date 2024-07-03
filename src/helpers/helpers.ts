@@ -118,3 +118,87 @@ export const getCityData = (inputValue: string) => {
 
     return ''
 }
+
+interface BookingSearchParams {
+    city?: string;
+    region?: string;
+    country?: string;
+    fromDate?: string;
+    toDate?: string;
+    adults?: number;
+    rooms?: number;
+    personCountryCode?: string;
+    personCurrency?: string;
+}
+
+export const generateBookingUrl = (params: BookingSearchParams): string => {
+    const {
+        city = '',
+        region = '',
+        country = '',
+        fromDate = '',
+        toDate = '',
+        adults = 1,
+        rooms = 1,
+        personCountryCode = '',
+        personCurrency = ''
+    } = params;
+
+    if (!city) {
+        return ''
+    }
+    // Encode city, region, and country for URL
+    const location = `${city}, ${region}, ${country}`.replace(/ /g, '+');
+
+    const baseUrl = `https://www.booking.com/searchresults.${personCountryCode}.html`;
+    const queryParams = new URLSearchParams({
+        ss: location,
+        sb: '1',
+        src: 'index',
+        src_elem: 'sb',
+        checkin: fromDate,
+        checkout: toDate,
+        group_adults: adults.toString(),
+        no_rooms: rooms.toString(),
+        search_selected: 'true',
+        soz: '1',
+        lang: personCountryCode,
+        lang_changed: '1',
+        selected_currency: personCurrency
+    });
+    return `${baseUrl}?${queryParams.toString()}`;
+}
+
+interface AiraloSearchParams {
+    country?: string;
+    languageCode?: string;
+}
+
+export const generateAiraloUrl = (params: AiraloSearchParams): string => {
+    const {
+        country,
+        languageCode = 'en-US' // lang передается в качестве необязательного параметра
+    } = params;
+
+    if (!country) {
+        return ''
+    }
+
+    // Encode country for URL
+    const encodedCountry = country.replace(/ /g, '-');
+
+    // Construct the URL
+    const baseUrl = 'https://www.airalo.com';
+    const path = `/${encodedCountry}-esim`;
+    // const path = `/${languageCode}/${encodedCountry}-esim`;
+
+    // Combine base URL and path and return the generated URL
+    return `${baseUrl}${path}`;
+}
+
+export const getUberUrl = ({
+                               countryCode = 'es',
+                               langCode = 'en'
+                           }) => {
+    return `https://www.uber.com/${countryCode}/${langCode}/`
+}

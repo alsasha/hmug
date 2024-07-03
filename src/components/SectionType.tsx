@@ -36,10 +36,17 @@ type Props = {
     otherAmount: number
     otherAmountInCountryCurrency: number
     setOtherAmount: (value: number) => void
+    onBookingClick: () => void
+    onAiraloClick: () => void
+    onUberClick: () => void
 }
 
 const AccommodationDropdown = ({
-    title, icon, description, subtitles, siteType, siteUrl, svg, selectedCityData, personCurrency, selectedSections, setSelectedSections, daysBetween, currenciesValues, otherAmount, setOtherAmount, otherAmountInCountryCurrency
+    title, icon, description,
+    subtitles, siteType, siteUrl, svg, selectedCityData,
+    personCurrency, selectedSections, setSelectedSections,
+    daysBetween, currenciesValues, otherAmount, setOtherAmount, otherAmountInCountryCurrency,
+    onBookingClick, onAiraloClick, onUberClick
 }: Props) => {
     const [isOpen, setIsOpen] = useState(false);
     const [width, setWidth] = useState(12);
@@ -61,9 +68,15 @@ const AccommodationDropdown = ({
         })
     };
 
-    const onOpenSite = (url?: string) => {
-        if (url) {
-            window.open(url, '_blank')
+    const onOpenSite = () => {
+        if (siteType === 'booking') {
+            onBookingClick()
+        }
+        if (siteType === 'Uber') {
+            onUberClick()
+        }
+        if (siteType === 'Airalo') {
+            onAiraloClick()
         }
     }
 
@@ -196,7 +209,7 @@ const AccommodationDropdown = ({
                 </ul>
 
                 {siteType && (
-                    <div className="bottom-buttons" onClick={() => onOpenSite(siteUrl)}>
+                    <div className="bottom-buttons" onClick={onOpenSite}>
                         <button className="checkout-button">Check out now</button>
                         <button className="booking-button">
                             {svg}
