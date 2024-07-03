@@ -1,14 +1,11 @@
 /* Layout.css */
 .layout {
-    max-width: 393px;
-    height: 852px;
-    width: 100%;
-    max-height: 100vh;
-    margin: 0 auto; /* Для центрирования компонента */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Опционально: тень для визуального отделения */
-    overflow: scroll; /* Чтобы скрыть содержимое, выходящее за границы */
     display: flex;
     flex-direction: column;
+    max-width: 393px;
+    width: 100%;
+    margin: 0 auto; /* Для центрирования компонента */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Опционально: тень для визуального отделения */
     position: relative;
 }
 

@@ -6,9 +6,10 @@ import { useHistory } from 'react-router-dom';
 
 type LayoutProps = {
     children: React.ReactNode;
+    isConverter?: boolean
 };
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = ({ children, isConverter }) => {
     const { pathname } = useLocation();
     const history = useHistory();
 
@@ -21,7 +22,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     };
 
     return (
-        <div className="layout">
+        <div className={`layout ${isConverter ? 'layout-converter' : ''}`}>
             {children}
             <footer className="footer">
                 <button

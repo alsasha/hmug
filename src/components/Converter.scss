@@ -153,7 +153,8 @@
       transition: background-color 0.3s;
       width: 85px;
       border-radius: 10px;
-      height: calc((100vh - 331px) / 5);
+      height: calc((100vh - 448px) / 5);
+      min-height: 75px;
       max-height: 85px;
 
       color: #041C14;

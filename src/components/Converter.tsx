@@ -239,9 +239,14 @@ const Converter = ({ currenciesValues, setCurrenciesValues, fetchConversion }: P
         // todo check if currency exist
     }
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []); // Пустой массив зависимостей гарантирует, что этот эффект выполнится только один раз при монтировании
+
+
     return (
-        <Layout>
-            <div className={`home-wrapper home-wrapper-is-result`}>
+        <Layout isConverter>
+            <div className={`home-wrapper home-wrapper-is-result home-wrapper-converter`}>
                 <header className="header-wrapper">
                     <div className="converter-title">Currency converter</div>
                     <div className="converter-select-wrapper">

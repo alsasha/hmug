@@ -249,6 +249,15 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion }: Props)
         togglePopup();
     }
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        if (isResultState) {
+            document.body.style.overflow = 'scroll';
+        } else {
+            document.body.style.overflow = 'scroll';
+        }
+    }, [isResultState]); // Пустой массив зависимостей гарантирует, что этот эффект выполнится только один раз при монтировании
+
     // @ts-ignore
     return (
         <Layout>

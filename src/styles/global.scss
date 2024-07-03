@@ -18,9 +18,10 @@ body, input, button {
 }
 
 body {
-  overflow: hidden;
+  overflow: scroll;
   margin: 0;
   padding: 0;
+  background: #EEEFF3;
 }
 
 body * {
