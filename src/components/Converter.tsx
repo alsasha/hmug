@@ -315,7 +315,7 @@ const Converter = ({ currenciesValues, setCurrenciesValues, fetchConversion }: P
                         </div>
                     </div>
                 </header>
-                <div>
+                <div className="calculator-wrapper">
                     <div className="calculator">
                         <div className="buttons">
                             {['C', '←', '%', '÷', '7', '8', '9', '×', '4', '5', '6', '-', '1', '2', '3', '+', '0', ',', '='].map((btn) => (

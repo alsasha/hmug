@@ -37,6 +37,8 @@ function App() {
                   <Home
                       currenciesValues={currenciesValues}
                       setCurrenciesValues={setCurrenciesValues}
+                      // @ts-ignore
+                      fetchConversion={fetchConversion}
                   />
               </Route>
               <Route path="/converter">

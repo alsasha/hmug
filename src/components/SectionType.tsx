@@ -34,13 +34,17 @@ type Props = {
     daysBetween: number
     currenciesValues: CurrenciesValuesType
     otherAmount: number
+    otherAmountInCountryCurrency: number
     setOtherAmount: (value: number) => void
 }
 
 const AccommodationDropdown = ({
-    title, icon, description, subtitles, siteType, siteUrl, svg, selectedCityData, personCurrency, selectedSections, setSelectedSections, daysBetween, currenciesValues, otherAmount, setOtherAmount
+    title, icon, description, subtitles, siteType, siteUrl, svg, selectedCityData, personCurrency, selectedSections, setSelectedSections, daysBetween, currenciesValues, otherAmount, setOtherAmount, otherAmountInCountryCurrency
 }: Props) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [width, setWidth] = useState(12);
+
+    const widthRef = useRef<HTMLDivElement>(null)
 
     const isOther = title === 'Other expenses'
     const toggleDropdown = () => {
@@ -79,10 +83,17 @@ const AccommodationDropdown = ({
     const handleOtherChange = (e: ChangeEvent<HTMLInputElement>) => {
         const numericRegex = /^[0-9]+$/;
         const value = e.target.value
-        if (numericRegex.test(value) || value === '') {
+        const scientificNotationRegex = /[eE]/;
+
+        if (numericRegex.test(value) && !scientificNotationRegex.test(value) || value === '') {
             setOtherAmount(Number(value))
+            if (widthRef.current) {
+                widthRef.current.innerText = `${Number(value)}`
+                setWidth(widthRef?.current?.offsetWidth || 12)
+            }
         }
     }
+
     return (
         <div className="accommodation-dropdown">
             <div className="dropdown-header" onClick={toggleDropdown}>
@@ -100,9 +111,7 @@ const AccommodationDropdown = ({
                             <span>{personCurrency?.symbol}</span>
                             <div>
                                 <input
-                                    style={{
-                                        width: `${otherAmount.toString().length * 11}px`
-                                    }}
+                                    style={{ width }}
                                     type='tel'
                                     value={otherAmount}
                                     onChange={handleOtherChange}
@@ -143,40 +152,46 @@ const AccommodationDropdown = ({
                     <span className="dropdown-euro">
                         {selectedCityData?.currency?.symbol}
                         {' '}
-                        {Math.round(amountForAllDaysInDollars * (currenciesValues['USD'][selectedCityData?.currency?.code || ''] || 0))}
+                        {isOther ? otherAmountInCountryCurrency
+                            :
+                            Math.round(amountForAllDaysInDollars * (currenciesValues['USD'][selectedCityData?.currency?.code || ''] || 0))
+                        }
                         {' '}
                         {selectedCityData?.currency?.code}
                     </span>
                 </div>
             </div>
+            {isOther ? <div ref={widthRef} className="dropdown-price-other-ref">0</div> : null}
             <div className={`dropdown-list-container ${isOpen ? 'open' : ''}`}>
                 <ul className="dropdown-list">
                     {subtitles?.map(({name: type}) => {
-                        return (
-                            <li
-                                key={type}
-                                className={`dropdown-item ${type === selectedSections?.[title as SectionTypes] ? 'active' : ''}`}
-                                onClick={() => {
-                                    handleTypeClick(type)
-                                }}
-                            >
-                                <svg width="5" height="4" viewBox="0 0 5 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="2.5" cy="2" r="2" />
-                                </svg>
-                                <span>
+                            return (
+                                <li
+                                    key={type}
+                                    className={`dropdown-item ${type === selectedSections?.[title as SectionTypes] ? 'active' : ''}`}
+                                    onClick={() => {
+                                        handleTypeClick(type)
+                                    }}
+                                >
+                                    <svg width="5" height="4" viewBox="0 0 5 4" fill="none"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="2.5" cy="2" r="2"/>
+                                    </svg>
+                                    <span>
                                     {type}
                                 </span>
-                                <span>
+                                    <span>
                                     {selectedCityData?.sections?.[type] === '—' ? '' : personCurrency?.symbol}
-                                    {' '}
-                                    {selectedCityData?.sections?.[type] === '—' ? (
-                                        '—'
-                                    ) : (
-                                        Math.round(Number(selectedCityData?.sections?.[type] === '—' ? 0 : selectedCityData?.sections?.[type] || 0) * (currenciesValues['USD'][personCurrency?.code || ''] || 0))
-                                    )}
+                                        {' '}
+                                        {selectedCityData?.sections?.[type] === '—' ? (
+                                            '—'
+                                        ) : (
+                                            Math.round(Number(selectedCityData?.sections?.[type] === '—' ? 0 : selectedCityData?.sections?.[type] || 0) * (currenciesValues['USD'][personCurrency?.code || ''] || 0))
+                                        )}
                                 </span>
-                            </li>
-                        )}
+                                </li>
+                            )
+                        }
                     )}
                 </ul>
 
@@ -186,7 +201,7 @@ const AccommodationDropdown = ({
                         <button className="booking-button">
                             {svg}
                         </button>
-                </div>
+                    </div>
                 )}
             </div>
         </div>

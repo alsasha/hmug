@@ -154,6 +154,7 @@
       width: 85px;
       border-radius: 10px;
       height: calc((100vh - 331px) / 5);
+      max-height: 85px;
 
       color: #041C14;
       text-align: center;
@@ -187,5 +188,9 @@
       }
     }
   }
+}
+
+.calculator-wrapper {
+  background: #EFF1F4;
 }
 

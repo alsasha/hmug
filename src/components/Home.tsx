@@ -15,13 +15,17 @@ import {SectionTypeWrapper} from "./SectionTypeWrapper";
 import {getCityData} from "../helpers/helpers";
 import {currenciesWithCountries} from "../constants/currenciesWithCountries";
 import {initialSectionTypesByClass} from "../constants/initialSectionTypes";
+import {ConversionResult} from "../services/services";
 
 type Props = {
     currenciesValues: CurrenciesValuesType
     setCurrenciesValues: (value: CurrenciesValuesType) => void
+    fetchConversion: (
+        amount?: number, fromCurrency?: string, toCurrency?: string
+    ) => Promise<ConversionResult>
 }
 
-const Home = ({ currenciesValues, setCurrenciesValues }: Props)  => {
+const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion }: Props)  => {
     const [isResultState, setIsResultState] = useState(false)
     const [selectedCityData, setSelectedCityData] = useState<SelectedCityType | undefined>(undefined)
     const [isOpen, setIsOpen] = useState(false);
@@ -91,6 +95,12 @@ const Home = ({ currenciesValues, setCurrenciesValues }: Props)  => {
         }, 0)
         return totalAmountForOneDay * daysBetween
     }, [selectedSections, selectedCityData, daysBetween])
+
+    const otherAmountInCountryCurrency = useMemo(() => {
+        const otherAmountInDollars = Math.round(otherAmount / (currenciesValues?.['USD']?.[personCurrency?.code || ''] || 1))
+        return Math.round(otherAmountInDollars * (currenciesValues?.['USD']?.[selectedCityData?.currency?.code || ''] || 0))
+    }, [otherAmount, currenciesValues, personCurrency, selectedCityData])
+
     const handleSubmit = () => {
         const cityExists = getCityData(inputValue);
         let hasError = false
@@ -309,14 +319,14 @@ const Home = ({ currenciesValues, setCurrenciesValues }: Props)  => {
                                 <div className="city-travel-info-top__right__title">
                                     {personCurrency?.symbol}
                                     {' '}
-                                    {Math.round(totalAmountInDollars * (currenciesValues['USD'][personCurrency?.code || ''] || 0))}
+                                    {Math.round(totalAmountInDollars * (currenciesValues['USD'][personCurrency?.code || ''] || 0)) + otherAmount}
                                     {' '}
                                     {personCurrency?.code}
                                 </div>
                                 <div className="city-travel-info-top__right__subtitle">
                                     {selectedCityData?.currency?.symbol}
                                     {' '}
-                                    {Math.round(totalAmountInDollars * (currenciesValues['USD'][selectedCityData?.currency?.code || ''] || 0))}
+                                    {Math.round(totalAmountInDollars * (currenciesValues['USD'][selectedCityData?.currency?.code || ''] || 0)) + otherAmountInCountryCurrency}
                                     {' '}
                                     {selectedCityData?.currency?.code}
                                 </div>
@@ -344,6 +354,7 @@ const Home = ({ currenciesValues, setCurrenciesValues }: Props)  => {
                     currenciesValues={currenciesValues}
                     otherAmount={otherAmount}
                     setOtherAmount={setOtherAmount}
+                    otherAmountInCountryCurrency={otherAmountInCountryCurrency}
                 />}
 
                 <div>
