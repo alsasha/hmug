@@ -5,6 +5,7 @@ import {useState} from 'react'
 import './Converter.scss'
 import CurrencyPopup from "./CurrencyPopup";
 import {ConversionResult} from "../services/services";
+import TabSwitcher from "./Tabs";
 
 type Props = {
     currenciesValues: CurrenciesValuesType
@@ -12,10 +13,12 @@ type Props = {
     fetchConversion: (
         amount?: number, fromCurrency?: string, toCurrency?: string
     ) => Promise<ConversionResult>
+    activeTab: 'summary' | 'converter'
+    setActiveTab: (value: 'summary' | 'converter') => void
 }
 
 // todo чтобы нельзя было выбрать curr который уже выбран
-const Converter = ({ currenciesValues, setCurrenciesValues, fetchConversion }: Props) => {
+const Converter = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTab, setActiveTab }: Props) => {
     const [selectedSelect, setSelectedSelect] = useState(SelectedSelect.First)
     const [clickedSelect, setClickedSelect] = useState(SelectedSelect.First)
     const [firstCurrency, setFirstCurrency] = useState<CurrencyType | null>(    {
@@ -248,7 +251,7 @@ const Converter = ({ currenciesValues, setCurrenciesValues, fetchConversion }: P
         <Layout isConverter>
             <div className={`home-wrapper home-wrapper-is-result home-wrapper-converter`}>
                 <header className="header-wrapper">
-                    <div className="converter-title">Currency converter</div>
+                    <TabSwitcher activeTab={activeTab} onTabChange={setActiveTab} />
                     <div className="converter-select-wrapper">
                         <div className={`converter-select ${selectedSelect === SelectedSelect.First ? 'converter-select-selected' : ''}`}>
                             <div

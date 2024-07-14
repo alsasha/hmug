@@ -1,0 +1,99 @@
+// TabSwitcher.scss
+.tab-switcher {
+  position: relative;
+  display: flex;
+  width: 234px;
+  height: 32px;
+  padding: 2px;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #FFF;
+}
+
+.tabs {
+  display: flex;
+  flex: 1;
+}
+
+.tab {
+  flex: 1;
+  cursor: pointer;
+  z-index: 1;
+
+  display: flex;
+  width: 114px;
+  height: 28px;
+  padding: 6px 27px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  color: #006659;
+  text-align: center;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  border-radius: 9px;
+  background: #FFF;
+}
+
+.tab.active {
+  background: #006659;
+  color: #FFF;
+}
+
+.indicator {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  width: 50%; // adjust this width based on your requirements
+  border-radius: 20px;
+  background-color: white;
+  transition: transform 0.3s ease;
+}
+
+.indicator.summary {
+  transform: translateX(0);
+}
+
+.indicator.converter {
+  transform: translateX(100%);
+}
+
+.active-from-left {
+  position: relative;
+  z-index: 100;
+  animation: fadeInFromLeft 0.3s ease forwards;
+}
+
+.active-from-right {
+  position: relative;
+  z-index: 100;
+  animation: fadeInFromRight 0.3s ease forwards;
+}
+
+@keyframes fadeInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

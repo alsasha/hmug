@@ -16,6 +16,9 @@ import {generateAiraloUrl, generateBookingUrl, getCityData, getUberUrl} from "..
 import {currenciesWithCountries} from "../constants/currenciesWithCountries";
 import {initialSectionTypesByClass} from "../constants/initialSectionTypes";
 import {ConversionResult} from "../services/services";
+import {SURVEY_LINK} from "../constants/url";
+import {SUBTITLES} from "../constants/commons";
+import TabSwitcher from "./Tabs";
 
 type Props = {
     currenciesValues: CurrenciesValuesType
@@ -23,9 +26,13 @@ type Props = {
     fetchConversion: (
         amount?: number, fromCurrency?: string, toCurrency?: string
     ) => Promise<ConversionResult>
+    activeTab: 'summary' | 'converter'
+    setActiveTab: (value: 'summary' | 'converter') => void
+    subtitle: string
+    setSubtitle: (value: string) => void
 }
 
-const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion }: Props)  => {
+const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTab, setActiveTab, subtitle, setSubtitle }: Props)  => {
     const [isResultState, setIsResultState] = useState(false)
     const [selectedCityData, setSelectedCityData] = useState<SelectedCityType | undefined>(undefined)
     const [isOpen, setIsOpen] = useState(false);
@@ -60,6 +67,15 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion }: Props)
     const citizenshipRef = useRef<HTMLDivElement>(null);
 
     const [otherAmount, setOtherAmount] = useState(0)
+
+    const onChangeSubtitleValue = () => {
+        const newValue = (Number(subtitle) + 1)
+        if (newValue > 3) {
+            setSubtitle('1')
+        } else {
+            setSubtitle(newValue.toString())
+        }
+    }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -142,6 +158,7 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion }: Props)
         if (!hasError) {
             setErrorMessage('');
             setIsResultState(true)
+            onChangeSubtitleValue()
             // @ts-ignore
             setSelectedCityData(cityExists)
         }
@@ -207,6 +224,7 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion }: Props)
         // todo спросить как должно работать ?
         setInputValue('')
         setIsResultState(false)
+        onChangeSubtitleValue()
     }
 
     useEffect(() => {
@@ -295,18 +313,35 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion }: Props)
         window.open(uberUrl, '_blank')
     }, [uberUrl])
 
+    const onHelperLinkClick = () => {
+        window.open(SURVEY_LINK, '_blank')
+    }
+
     // @ts-ignore
     return (
         <Layout>
             <div className={`home-wrapper ${isResultState ? 'home-wrapper-is-result' : ''}`}>
                 <header className="header-wrapper">
-                    <img className="header-logo" src={hmugLogo} alt="HTUG Logo"/>
+                    <div className="header-wrapper-logo-wrapper">
+                        <img className="header-logo" src={hmugLogo} alt="HTUG Logo"/>
+                        <div className="header-logo-helper-link" onClick={onHelperLinkClick}>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="10" cy="10" r="10" fill="#FEFEFE"/>
+                                <path
+                                    d="M10.2571 11.4235H8.94694V11.1059C8.94694 10.7529 9.01633 10.4784 9.1551 10.2824C9.29388 10.0784 9.53878 9.89412 9.8898 9.72941L10.6245 9.37647C10.951 9.21961 11.2082 9.07059 11.3959 8.92941C11.5837 8.78039 11.6776 8.55686 11.6776 8.25882C11.6776 8.03137 11.6367 7.83529 11.5551 7.67059C11.4735 7.50588 11.3184 7.38039 11.0898 7.29412C10.8694 7.2 10.551 7.15294 10.1347 7.15294C9.66122 7.15294 9.2898 7.20392 9.02041 7.30588C8.75918 7.40784 8.57551 7.56078 8.46939 7.76471C8.36327 7.96863 8.3102 8.23137 8.3102 8.55294V8.72941H7V8.54118C7 8.07059 7.1102 7.64706 7.33061 7.27059C7.55918 6.88627 7.90612 6.58039 8.37143 6.35294C8.8449 6.11765 9.44898 6 10.1837 6C10.8531 6 11.3918 6.09804 11.8 6.29412C12.2163 6.48235 12.5184 6.7451 12.7061 7.08235C12.902 7.41176 13 7.78039 13 8.18824C13 8.55686 12.9184 8.87059 12.7551 9.12941C12.6 9.38039 12.4041 9.59216 12.1673 9.76471C11.9306 9.93725 11.6857 10.0824 11.4327 10.2L10.7224 10.5059C10.5429 10.5922 10.4204 10.6824 10.3551 10.7765C10.2898 10.8627 10.2571 10.9804 10.2571 11.1294V11.4235ZM10.3673 14H8.87347V12.2588H10.3673V14Z"
+                                    fill="#006659"/>
+                            </svg>
+                        </div>
+                    </div>
                     {!isResultState && (
                         <>
                             <h1 className="header-title semi-bold-weight">Travel calculator</h1>
-                            <p className="header-subtitle">Let us do the math</p>
+                            <p className="header-subtitle">{SUBTITLES[subtitle]}</p>
                         </>
                     )}
+
+                    <TabSwitcher activeTab={activeTab} onTabChange={setActiveTab} />
 
                     <CityInput
                         inputRef={inputRef}
@@ -322,10 +357,11 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion }: Props)
                              className={`header-icon-button header-icon-button-dates ${startDateSelected && endDateSelected ? 'header-icon-button-dates-selected' : ''}`}
                              onClick={togglePopup}>
                             <img src={calendarIcon} alt="calendar icon"/>
-                            <span className="header-icon-buttons-selected-dates">{startDateSelected && endDateSelected ? (
+                            <span
+                                className="header-icon-buttons-selected-dates">{startDateSelected && endDateSelected ? (
                                     <>
                                         <span>{startDateSelected.format('D MMM')}</span>
-                                            <span className="divider"/>
+                                        <span className="divider"/>
                                         <span>
                                         {endDateSelected.format('D MMM')}
                                         </span>
@@ -347,46 +383,46 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion }: Props)
                     </div>
                     {isResultState && (
                         <div className="city-travel-info">
-                        <div className="city-travel-info-top">
-                            <div className="city-travel-info-top__left">
-                                <div className="city-travel-info-top__left__title">
-                                    {selectedCityData?.city}
-                                </div>
-                                <div className="city-travel-info-top__left__subtitle">
+                            <div className="city-travel-info-top">
+                                <div className="city-travel-info-top__left">
+                                    <div className="city-travel-info-top__left__title">
+                                        {selectedCityData?.city}
+                                    </div>
+                                    <div className="city-travel-info-top__left__subtitle">
                                     <span>
                                         {selectedCityData?.country?.flag}
                                     </span>
-                                    <span>
+                                        <span>
                                         {selectedCityData?.country?.name}
                                     </span>
+                                    </div>
+                                </div>
+                                <div className="city-travel-info-top__right">
+                                    <div className="city-travel-info-top__right__title">
+                                        {personCurrency?.symbol}
+                                        {' '}
+                                        {Math.round(totalAmountInDollars * (currenciesValues['USD'][personCurrency?.code || ''] || 0)) + otherAmount}
+                                        {' '}
+                                        {personCurrency?.code}
+                                    </div>
+                                    <div className="city-travel-info-top__right__subtitle">
+                                        {selectedCityData?.currency?.symbol}
+                                        {' '}
+                                        {Math.round(totalAmountInDollars * (currenciesValues['USD'][selectedCityData?.currency?.code || ''] || 0)) + otherAmountInCountryCurrency}
+                                        {' '}
+                                        {selectedCityData?.currency?.code}
+                                    </div>
                                 </div>
                             </div>
-                            <div className="city-travel-info-top__right">
-                                <div className="city-travel-info-top__right__title">
-                                    {personCurrency?.symbol}
-                                    {' '}
-                                    {Math.round(totalAmountInDollars * (currenciesValues['USD'][personCurrency?.code || ''] || 0)) + otherAmount}
-                                    {' '}
-                                    {personCurrency?.code}
+                            <div className="city-travel-info-bottom">
+                                <div className="city-travel-info-bottom-left">
+                                    Passport control
                                 </div>
-                                <div className="city-travel-info-top__right__subtitle">
-                                    {selectedCityData?.currency?.symbol}
-                                    {' '}
-                                    {Math.round(totalAmountInDollars * (currenciesValues['USD'][selectedCityData?.currency?.code || ''] || 0)) + otherAmountInCountryCurrency}
-                                    {' '}
-                                    {selectedCityData?.currency?.code}
+                                <div className="city-travel-info-bottom-right">
+                                    Visa-free | 90 days
                                 </div>
                             </div>
-                        </div>
-                        <div className="city-travel-info-bottom">
-                            <div className="city-travel-info-bottom-left">
-                                Passport control
-                            </div>
-                            <div className="city-travel-info-bottom-right">
-                                Visa-free | 90 days
-                            </div>
-                        </div>
-                    </div>)}
+                        </div>)}
                 </header>
 
                 {!isResultState && <Banners/>}

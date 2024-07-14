@@ -54,7 +54,7 @@
 }
 
 .header-wrapper {
-  padding: 36px 22px 22px;
+  padding: 20px 22px 22px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -64,6 +64,7 @@
 
 .header-logo {
   margin-bottom: 40px;
+  height: 20px;
 }
 
 .header-title {
@@ -98,6 +99,10 @@
   overflow: hidden;
 }
 
+.home-wrapper .tab-switcher {
+  margin-top: 20px;
+}
+
 .divider {
   width: 1px;
   height: 16px;
@@ -110,17 +115,40 @@
   align-items: center;
 }
 
+.header-wrapper-logo-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.header-logo-helper-link {
+  cursor: pointer;
+}
+
+.header-logo-helper-link:hover {
+  opacity: 0.9;
+}
+
 .home-wrapper-is-result {
   background: #EEEFF3;
   margin-bottom: 86px;
   overflow: scroll;
+
+  .header-wrapper-logo-wrapper {
+    display: none;
+  }
   .header-wrapper {
-    padding: 24px 21px 10px;
+    padding: 14px 21px 10px;
+  }
+
+  .tab-switcher {
+    margin-top: 0;
+    margin-bottom: 20px;
   }
 
   .header-logo {
     width: 56px;
-    margin-bottom: 32px;
   }
 
   .city-input-container {
@@ -135,6 +163,14 @@
 
 .home-wrapper-converter {
   margin-bottom: 6px;
+}
+
+.home-wrapper-converter .tab-switcher {
+  margin: 0  0 20px;
+}
+
+.home-wrapper-converter .header-wrapper {
+  padding-top: 20px;
 }
 
 .city-travel-info {

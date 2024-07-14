@@ -3,10 +3,10 @@ import './App.css';
 import './styles/global.scss'
 import Home from './components/Home';
 import Converter from './components/Converter';
-import Summary from './components/Summary';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import {CurrenciesValuesType} from "./types/types";
 import convertCurrency from "./services/services";
+import Main from "./components/Main";
 
 function App() {
     const [currenciesValues, setCurrenciesValues] = useState<CurrenciesValuesType>({})
@@ -34,22 +34,14 @@ function App() {
       <Router basename={'/hmug'}>
           <Switch>
               <Route exact path="/" >
-                  <Home
+                  <Main
                       currenciesValues={currenciesValues}
                       setCurrenciesValues={setCurrenciesValues}
                       // @ts-ignore
                       fetchConversion={fetchConversion}
                   />
               </Route>
-              <Route path="/converter">
-                  <Converter
-                      currenciesValues={currenciesValues}
-                      setCurrenciesValues={setCurrenciesValues}
-                      // @ts-ignore
-                      fetchConversion={fetchConversion}
-                  />
-              </Route>
-              <Route path="/summary" component={Summary} />
+              <Redirect to="/" />
           </Switch>
       </Router>
   );
