@@ -60,6 +60,11 @@
   align-items: center;
   background: #006659;
   border-radius: 0 0 20px 20px;
+  position: sticky;
+  top: 0;
+  width: 393px;
+  z-index: 10;
+  transition: all 0.3s ease-in-out;
 }
 
 .header-logo {
@@ -97,10 +102,19 @@
   margin-bottom: 66px;
   height: auto;
   overflow: hidden;
+  background: #F7F9F9;
+}
+
+.layout {
+  background: #F7F9F9;
 }
 
 .home-wrapper .tab-switcher {
   margin-top: 20px;
+}
+
+.home-wrapper__scrolled {
+  padding-top: 258px;
 }
 
 .divider {
@@ -159,6 +173,10 @@
     height: 49px;
     padding: 8px 42px 8px 44px;
   }
+
+  .suggestions-list {
+    width: calc(100% - 42px);
+  }
 }
 
 .home-wrapper-converter {
@@ -171,6 +189,24 @@
 
 .home-wrapper-converter .header-wrapper {
   padding-top: 20px;
+}
+
+.header-wrapper__scrolled {
+  position: fixed;
+  top: 0;
+  padding-top: 0;
+
+  .tab-switcher {
+    display: none;
+  }
+
+  .city-input-container {
+    display: none;
+  }
+
+  .header-icon-buttons {
+    display: none;
+  }
 }
 
 .city-travel-info {

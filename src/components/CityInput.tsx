@@ -13,6 +13,7 @@ type Props = {
     isShowFilteredCitiesAndCountries: boolean
     setIsShowFilteredCitiesAndCountries: (val: boolean) => void
     handleClear: () => void
+    handleClearCity: () => void
     filteredCitiesAndCountries: Record<string, string | number>[]
     handleSelectCity: (value: Record<string, string | number>) => void
     handleFocus: () => void
@@ -23,7 +24,7 @@ const citiesPlaceholder = [
     "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose"
 ];
 
-const CityInput = ({ inputRef, inputValue, handleChange, handleSubmit, errorMessage, isResultState, handleClear, filteredCitiesAndCountries, handleSelectCity, handleFocus, isShowFilteredCitiesAndCountries, setIsShowFilteredCitiesAndCountries }: Props)  => {
+const CityInput = ({ inputRef, inputValue, handleChange, handleSubmit, errorMessage, isResultState, handleClear, handleClearCity, filteredCitiesAndCountries, handleSelectCity, handleFocus, isShowFilteredCitiesAndCountries, setIsShowFilteredCitiesAndCountries }: Props)  => {
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             handleSubmit()
@@ -139,7 +140,7 @@ const CityInput = ({ inputRef, inputValue, handleChange, handleSubmit, errorMess
                                     fill="#91918F"/>
                             </svg>
                         </button>
-                        <button onClick={handleClear} className="clear-button">
+                        <button onClick={handleClearCity} className="clear-button">
                             <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="14" cy="14" r="14" fill="#E7EBEA"/>

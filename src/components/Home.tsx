@@ -100,13 +100,6 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
         }
     };
 
-    const handleSelectCity = (value: Record<string, string | number>) => {
-        console.log('value', value)
-        setInputValue(value.Destination.toString() || '');
-        setFilteredCitiesAndCountries([])
-        setIsShowFilteredCitiesAndCountries(false)
-    }
-
     const handleFocusCityInput = () => {
         setIsShowFilteredCitiesAndCountries(true)
     }
@@ -140,8 +133,9 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
         return Math.round(otherAmountInDollars * (currenciesValues?.['USD']?.[selectedCityData?.currency?.code || ''] || 0))
     }, [otherAmount, currenciesValues, personCurrency, selectedCityData])
 
-    const handleSubmit = () => {
-        const cityExists = getCityData(inputValue);
+    const handleSubmit = (prop?: string) => {
+        const selectedCityInputValue = typeof prop === 'string' ? prop : inputValue
+        const cityExists = getCityData(selectedCityInputValue);
         let hasError = false
 
         // todo check dates
@@ -186,6 +180,15 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
             setSelectedCityData(cityExists)
         }
     };
+
+    const handleSelectCity = (value: Record<string, string | number>) => {
+        setInputValue(value.Destination.toString() || '');
+        setFilteredCitiesAndCountries([])
+        setIsShowFilteredCitiesAndCountries(false)
+        if (isResultState) {
+            handleSubmit(value.Destination.toString())
+        }
+    }
 
     const togglePopup = () => {
         if (isOpen) {
@@ -250,6 +253,12 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
         setIsShowFilteredCitiesAndCountries(false)
         setIsResultState(false)
         onChangeSubtitleValue()
+    }
+
+    const handleClearCity = () => {
+        setInputValue('')
+        setFilteredCitiesAndCountries([])
+        setIsShowFilteredCitiesAndCountries(false)
     }
 
     useEffect(() => {
@@ -342,11 +351,28 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
         window.open(SURVEY_LINK, '_blank')
     }
 
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    const handleScroll = () => {
+        if (window.scrollY > 250) {
+            setIsScrolled(true);
+        } else {
+            setIsScrolled(false);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     // @ts-ignore
     return (
         <Layout>
-            <div className={`home-wrapper ${isResultState ? 'home-wrapper-is-result' : ''}`}>
-                <header className="header-wrapper">
+            <div className={`home-wrapper ${isResultState ? 'home-wrapper-is-result' : ''} ${isScrolled ? 'home-wrapper__scrolled' : ''}`}>
+                <header className={`header-wrapper ${isScrolled ? 'header-wrapper__scrolled' : ''}`}>
                     <div className="header-wrapper-logo-wrapper">
                         <img className="header-logo" src={hmugLogo} alt="HTUG Logo"/>
                         <div className="header-logo-helper-link" onClick={onHelperLinkClick}>
@@ -376,6 +402,7 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
                         errorMessage={errorMessage}
                         isResultState={isResultState}
                         handleClear={handleClear}
+                        handleClearCity={handleClearCity}
                         filteredCitiesAndCountries={filteredCitiesAndCountries}
                         handleSelectCity={handleSelectCity}
                         handleFocus={handleFocusCityInput}

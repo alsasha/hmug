@@ -231,3 +231,8 @@
   border-radius: 0 10px 10px 0 !important;
 
 }
+
+.CalendarDay__selected, .CalendarDay__selected:active, .CalendarDay__selected:hover {
+  position: relative;
+  z-index: 0;
+}
