@@ -444,14 +444,14 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
                                     </div>
                                 </div>
                             </div>
-                            <div className="city-travel-info-bottom">
-                                <div className="city-travel-info-bottom-left">
-                                    Passport control
-                                </div>
-                                <div className="city-travel-info-bottom-right">
-                                    Visa-free | 90 days
-                                </div>
-                            </div>
+                            {/*<div className="city-travel-info-bottom">*/}
+                            {/*    <div className="city-travel-info-bottom-left">*/}
+                            {/*        Passport control*/}
+                            {/*    </div>*/}
+                            {/*    <div className="city-travel-info-bottom-right">*/}
+                            {/*        Visa-free | 90 days*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
                         </div>)}
                 </header>
 
