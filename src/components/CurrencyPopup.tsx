@@ -55,8 +55,10 @@ const CurrencyPopup = ({ isOpen, isClosing, popupRef, onDone, selectedCurrency, 
 
     const filteredCountries = useMemo(() => {
         const normalizedCurrency = currency.trim().toLowerCase();
-        return sortedCurrencies.filter(currencyObj => currencyObj.currency.toLowerCase().includes(normalizedCurrency))
-    }, [currency])
+        return sortedCurrencies.filter(currencyObj => {
+            return currencyObj.currency.toLowerCase().includes(normalizedCurrency)
+        })
+    }, [currency, selectedCurrency])
 
     return (
         <div>
@@ -91,9 +93,19 @@ const CurrencyPopup = ({ isOpen, isClosing, popupRef, onDone, selectedCurrency, 
                                             <li onClick={() => {
                                                 setSelectedCurrency(item)
                                                 onDone()
-                                            }} key={item.country} className="country-select-item">
+                                            }} key={item.country}
+                                                className={`country-select-item ${selectedCurrency?.code === item.code ? 'country-select-item__is-selected' : ''}`}
+                                            >
                                                 <div>{item.code}</div>
                                                 <div>{item.currency}</div>
+                                                {selectedCurrency?.code === item.code && (
+                                                    <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M13.6644 2.80737L5.66435 10.8074C5.55842 10.9138 5.43251 10.9983 5.29385 11.0559C5.15519 11.1135 5.00651 11.1432 4.85635 11.1432C4.70619 11.1432 4.55751 11.1135 4.41885 11.0559C4.28019 10.9983 4.15428 10.9138 4.04835 10.8074L0.619353 7.37937C0.405058 7.16508 0.284668 6.87443 0.284668 6.57137C0.284668 6.42131 0.314224 6.27273 0.37165 6.13409C0.429075 5.99545 0.513244 5.86948 0.619353 5.76337C0.725461 5.65727 0.851429 5.5731 0.990066 5.51567C1.1287 5.45825 1.27729 5.42869 1.42735 5.42869C1.73041 5.42869 2.02106 5.54908 2.23535 5.76337L4.85535 8.38337L12.0494 1.19137C12.1555 1.08527 12.2814 1.0011 12.4201 0.943671C12.5587 0.886246 12.7073 0.856689 12.8574 0.856689C13.0074 0.856689 13.156 0.886246 13.2946 0.943671C13.4333 1.0011 13.5592 1.08527 13.6654 1.19137C13.7715 1.29748 13.8556 1.42345 13.9131 1.56209C13.9705 1.70072 14 1.84931 14 1.99937C14 2.14943 13.9705 2.29802 13.9131 2.43666C13.8556 2.5753 13.7705 2.70127 13.6644 2.80737Z"
+                                                            fill="#7EC41F"/>
+                                                    </svg>
+                                                )}
                                             </li>
                                         )
                                     })}

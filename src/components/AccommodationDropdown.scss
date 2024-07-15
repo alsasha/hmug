@@ -27,6 +27,11 @@
       font-style: normal;
       font-weight: 600;
       line-height: normal;
+      svg {
+        path {
+          fill: #0C131D;
+        }
+      }
     }
 
     .dropdown-price-isOther {
@@ -55,6 +60,10 @@
       line-height: normal;
 
       align-self: start;
+
+      svg {
+        margin: 0;
+      }
     }
 
     .dropdown-icon {
@@ -122,10 +131,24 @@
         svg {
           fill: #35C768;
         }
+
+        .ruble-symbol {
+          margin: 0;
+          path {
+            fill: #35C768;
+          }
+        }
       }
 
       span:last-child {
         margin-left: auto;
+      }
+
+      .ruble-symbol {
+        margin: 0;
+        path {
+          fill: #0C131D;
+        }
       }
     }
   }

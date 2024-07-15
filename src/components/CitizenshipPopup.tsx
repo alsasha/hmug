@@ -68,7 +68,7 @@ const CitizenshipPopup = ({ isOpen, isClosing, popupRef, onDone, citizenship, se
                                             <li onClick={() => {
                                                 setCitizenship(item)
                                                 onDone()
-                                            }} key={item.country} className="country-select-item">
+                                            }} key={`${item.country}${item.name.replaceAll(' ', '')}`} className="country-select-item">
                                                 <div>{item.flag}</div>
                                                 <div>{item.name}</div>
                                             </li>

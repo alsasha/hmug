@@ -66,14 +66,6 @@ export const currencies = [
         "flag": "🇦🇲"
     },
     {
-        "name": "Australia",
-        "country": "AU",
-        "currency": "Australian Dollar",
-        "symbol": "A$",
-        "code": "AUD",
-        "flag": "🇦🇺"
-    },
-    {
         "name": "Azerbaijan",
         "country": "AZ",
         "currency": "Azerbaijan Manat",
@@ -194,14 +186,6 @@ export const currencies = [
         "flag": "🇧🇬"
     },
     {
-        "name": "Burkina Faso",
-        "country": "BF",
-        "currency": "West African CFA Franc",
-        "symbol": "CFA",
-        "code": "XOF",
-        "flag": "🇧🇫"
-    },
-    {
         "name": "Burundi",
         "country": "BI",
         "currency": "Burundian Franc",
@@ -226,36 +210,12 @@ export const currencies = [
         "flag": "🇰🇭"
     },
     {
-        "name": "Cameroon",
-        "country": "CM",
-        "currency": "Central African CFA Franc",
-        "symbol": "FCFA",
-        "code": "XAF",
-        "flag": "🇨🇲"
-    },
-    {
         "name": "Canada",
         "country": "CA",
         "currency": "Canadian Dollar",
         "symbol": "CA$",
         "code": "CAD",
         "flag": "🇨🇦"
-    },
-    {
-        "name": "Central African Republic",
-        "country": "CF",
-        "currency": "Central African CFA Franc",
-        "symbol": "FCFA",
-        "code": "XAF",
-        "flag": "🇨🇫"
-    },
-    {
-        "name": "Chad",
-        "country": "TD",
-        "currency": "Central African CFA Franc",
-        "symbol": "FCFA",
-        "code": "XAF",
-        "flag": "🇹🇩"
     },
     {
         "name": "Chile",
@@ -288,13 +248,6 @@ export const currencies = [
         "symbol": "CF",
         "code": "KMF",
         "flag": "🇰🇲"
-    },
-    {
-        "name": "Congo (Brazzaville)",
-        "country": "CG",
-        "currency": "Central African CFA Franc",
-        "symbol": "FCFA",
-        "code": "XAF"
     },
     {
         "name": "Congo (Kinshasa)",
@@ -415,14 +368,6 @@ export const currencies = [
         "flag": "🇫🇯"
     },
     {
-        "name": "Gabon",
-        "country": "GA",
-        "currency": "Central African CFA Franc",
-        "symbol": "FCFA",
-        "code": "XAF",
-        "flag": "🇬🇦"
-    },
-    {
         "name": "Gambia",
         "country": "GM",
         "currency": "Gambian Dalasi",
@@ -469,14 +414,6 @@ export const currencies = [
         "symbol": "FG",
         "code": "GNF",
         "flag": "🇬🇳"
-    },
-    {
-        "name": "Guinea-Bissau",
-        "country": "GW",
-        "currency": "West African CFA Franc",
-        "symbol": "CFA",
-        "code": "XOF",
-        "flag": "🇬🇼"
     },
     {
         "name": "Guyana",
@@ -606,14 +543,6 @@ export const currencies = [
         "flag": "🇰🇪"
     },
     {
-        "name": "Kiribati",
-        "country": "KI",
-        "currency": "Australian Dollar",
-        "symbol": "A$",
-        "code": "AUD",
-        "flag": "🇰🇮"
-    },
-    {
         "name": "Korea, North",
         "country": "KP",
         "currency": "North Korean Won",
@@ -726,14 +655,6 @@ export const currencies = [
         "flag": "🇲🇻"
     },
     {
-        "name": "Mali",
-        "country": "ML",
-        "currency": "West African CFA Franc",
-        "symbol": "CFA",
-        "code": "XOF",
-        "flag": "🇲🇱"
-    },
-    {
         "name": "Mauritania",
         "country": "MR",
         "currency": "Mauritanian Ouguiya",
@@ -805,14 +726,6 @@ export const currencies = [
         "flag": "🇳🇦"
     },
     {
-        "name": "Nauru",
-        "country": "NR",
-        "currency": "Australian Dollar",
-        "symbol": "A$",
-        "code": "AUD",
-        "flag": "🇳🇷"
-    },
-    {
         "name": "Nepal",
         "country": "NP",
         "currency": "Nepalese Rupee",
@@ -835,14 +748,6 @@ export const currencies = [
         "symbol": "C$",
         "code": "NIO",
         "flag": "🇳🇮"
-    },
-    {
-        "name": "Niger",
-        "country": "NE",
-        "currency": "West African CFA Franc",
-        "symbol": "CFA",
-        "code": "XOF",
-        "flag": "🇳🇪"
     },
     {
         "name": "Nigeria",
@@ -1013,14 +918,6 @@ export const currencies = [
         "flag": "🇸🇦"
     },
     {
-        "name": "Senegal",
-        "country": "SN",
-        "currency": "West African CFA Franc",
-        "symbol": "CFA",
-        "code": "XOF",
-        "flag": "🇸🇳"
-    },
-    {
         "name": "Serbia",
         "country": "RS",
         "currency": "Serbian Dinar",
@@ -1163,14 +1060,6 @@ export const currencies = [
         "symbol": "฿",
         "code": "THB",
         "flag": "🇹🇭"
-    },
-    {
-        "name": "Togo",
-        "country": "TG",
-        "currency": "West African CFA Franc",
-        "symbol": "CFA",
-        "code": "XOF",
-        "flag": "🇹🇬"
     },
     {
         "name": "Tonga",

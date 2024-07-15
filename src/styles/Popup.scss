@@ -57,6 +57,15 @@
   }
 }
 
+@keyframes slide-down-header {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
 .popup-done-button {
   position: absolute;
   bottom: 15px;

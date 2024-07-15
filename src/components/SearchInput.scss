@@ -161,5 +161,19 @@
       border-radius: 0 0 10px 10px;
     }
   }
+
+  li.country-select-item__is-selected {
+    color: #7EC41F !important;
+
+    div {
+      color: #7EC41F !important;
+    }
+  }
+}
+
+.country-select-item {
+  svg {
+    margin-left: auto;
+  }
 }
 

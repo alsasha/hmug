@@ -65,6 +65,7 @@
   width: 393px;
   z-index: 10;
   transition: all 0.3s ease-in-out;
+  max-width: 100vw;
 }
 
 .header-logo {
@@ -99,7 +100,6 @@
 }
 
 .home-wrapper {
-  margin-bottom: 66px;
   height: auto;
   overflow: hidden;
   background: #F7F9F9;
@@ -107,6 +107,10 @@
 
 .layout {
   background: #F7F9F9;
+}
+
+.layout-converter {
+  background: #EEEFF3;
 }
 
 .home-wrapper .tab-switcher {
@@ -146,7 +150,6 @@
 
 .home-wrapper-is-result {
   background: #EEEFF3;
-  margin-bottom: 86px;
   overflow: scroll;
 
   .header-wrapper-logo-wrapper {
@@ -189,12 +192,14 @@
 
 .home-wrapper-converter .header-wrapper {
   padding-top: 20px;
+  position: static;
 }
 
 .header-wrapper__scrolled {
   position: fixed;
   top: 0;
   padding-top: 0;
+  animation: slide-down-header 0.5s forwards;
 
   .tab-switcher {
     display: none;
@@ -206,6 +211,11 @@
 
   .header-icon-buttons {
     display: none;
+  }
+
+  &.home-wrapper-converter {
+    position: static;
+    padding-top: 20px;
   }
 }
 
@@ -255,11 +265,18 @@
 .city-travel-info-top__right__title {
   color: #DAF50F;
   text-align: right;
+  cursor: pointer;
 
   font-size: 23px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+
+  svg {
+    path {
+      fill: #DAF50F;
+    }
+  }
 }
 
 .city-travel-info-top__right__subtitle {

@@ -5,7 +5,7 @@ import {CurrenciesValuesType, CurrencyType, SelectedCityType, SelectedSectionsTy
 import React from 'react'
 
 type Props = {
-    personCurrency?: CurrencyType
+    personCurrency: CurrencyType | null
     selectedCityData?: SelectedCityType
     selectedSections?: SelectedSectionsType
     setSelectedSections: (value: SelectedSectionsType) => void

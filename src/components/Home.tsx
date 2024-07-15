@@ -7,7 +7,13 @@ import DateRangePickerComponent from './DateRangePickerComponent';
 import Layout from "./Layout";
 import moment from "moment/moment";
 import CityInput from "./CityInput";
-import {Classes, CountryType, CurrenciesValuesType, SelectedCityType, SelectedSectionsType} from "../types/types";
+import {
+    Classes,
+    CountryType,
+    CurrenciesValuesType, CurrencyType,
+    SelectedCityType,
+    SelectedSectionsType,
+} from "../types/types";
 import Banners from "./Banners";
 import ProfilePopup from "./ProfilePopup";
 import CitizenshipPopup from "./CitizenshipPopup";
@@ -25,6 +31,7 @@ import {ConversionResult} from "../services/services";
 import {SURVEY_LINK} from "../constants/url";
 import {SUBTITLES} from "../constants/commons";
 import TabSwitcher from "./Tabs";
+import CurrencyPopup from "./CurrencyPopup";
 
 type Props = {
     currenciesValues: CurrenciesValuesType
@@ -52,9 +59,12 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
     const [isCitizenshipOpen, setIsCitizenshipOpen] = useState(false);
     const [isCitizenshipClosing, setIsCitizenshipClosing] = useState(false);
 
+    const [isPersonCurrencyPopupOpen, setIsPersonCurrencyPopupOpen] = useState(false);
+    const [isPersonCurrencyPopupClosing, setIsPersonCurrencyPopupClosing] = useState(false);
     const popupRef = useRef<HTMLDivElement>(null);
     const popupProfileRef = useRef<HTMLDivElement>(null);
     const popupCitizenshipRef = useRef<HTMLDivElement>(null);
+    const personCurrencyPopupRef = useRef<HTMLDivElement>(null);
 
     const [startDateSelected, setStartDateSelected] = useState<moment.Moment | null>(null);
     const [endDateSelected, setEndDateSelected] = useState<moment.Moment | null>(null);
@@ -65,6 +75,7 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
     const [selectedClass, setSelectedClass] = useState<Classes>(Classes.Economy)
 
     const [citizenship, setCitizenship] = useState<CountryType | null>(null)
+    const [personCurrency, setPersonCurrency] = useState<CurrencyType | null>(null)
 
     const [inputValue, setInputValue] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -104,9 +115,10 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
         setIsShowFilteredCitiesAndCountries(true)
     }
 
-    const personCurrency = useMemo(() => {
-        return currenciesWithCountries.find(({ name }) => name === citizenship?.name)
-    }, [citizenship])
+    useEffect(() => {
+        const newPersonCurrency = currenciesWithCountries.find(({ name }) => name === citizenship?.name)
+        setPersonCurrency(newPersonCurrency || null)
+    }, [citizenship]);
 
     const daysBetween = useMemo(() => {
         if (endDateSelected && startDateSelected) {
@@ -228,6 +240,18 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
         }
     };
 
+    const togglePersonCurrencyPopup = () => {
+        if (isPersonCurrencyPopupOpen) {
+            setIsPersonCurrencyPopupClosing(true);
+            setTimeout(() => {
+                setIsPersonCurrencyPopupOpen(false);
+                setIsPersonCurrencyPopupClosing(false);
+            }, 500); // Длительность анимации закрытия
+        } else {
+            setIsPersonCurrencyPopupOpen(true);
+        }
+    };
+
     const handleClickOutside = (event: MouseEvent) => {
         if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
             togglePopup();
@@ -243,6 +267,12 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
     const handleCitizenshipClickOutside = (event: MouseEvent) => {
         if (popupCitizenshipRef.current && !popupCitizenshipRef.current.contains(event.target as Node)) {
             toggleCitizenshipPopup();
+        }
+    };
+
+    const handlePersonCurrencyClickOutside = (event: MouseEvent) => {
+        if (personCurrencyPopupRef.current && !personCurrencyPopupRef.current.contains(event.target as Node)) {
+            togglePersonCurrencyPopup();
         }
     };
 
@@ -296,6 +326,18 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
             document.removeEventListener('mousedown', handleCitizenshipClickOutside);
         };
     }, [isCitizenshipOpen]);
+
+    useEffect(() => {
+        if (isPersonCurrencyPopupOpen) {
+            document.addEventListener('mousedown', handlePersonCurrencyClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handlePersonCurrencyClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handlePersonCurrencyClickOutside);
+        };
+    }, [isPersonCurrencyPopupOpen]);
 
     const onCloseDatesDone = () => {
         togglePopup();
@@ -455,15 +497,26 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
                                     </div>
                                 </div>
                                 <div className="city-travel-info-top__right">
-                                    <div className="city-travel-info-top__right__title">
-                                        {personCurrency?.symbol}
+                                    <div
+                                        onClick={togglePersonCurrencyPopup}
+                                        className="city-travel-info-top__right__title"
+                                    >
+                                        {personCurrency?.symbol === '₽' ? (
+                                            <svg width="17" height="17" viewBox="0 0 49 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fillRule="evenodd" clipRule="evenodd" d="M17.7931 35.2919H29.6316C33.2281 35.2919 36.425 34.6175 39.2223 33.2688C42.0196 31.8701 44.1924 29.872 45.7409 27.2744C47.3394 24.6269 48.1386 21.4299 48.1386 17.6834C48.1386 13.9369 47.3394 10.7649 45.7409 8.16734C44.1924 5.51982 42.0196 3.49672 39.2223 2.09803C36.425 0.699344 33.2281 0 29.6316 0H17.7931H10.5252H6.55401V25.2513H0.635269V35.2919H6.55401V38.0111H0.603516V46.857H6.55401V50.2029H17.7931V46.857H32.221V38.0111H17.7931V35.2919ZM17.7931 25.2513H30.0812C32.6786 25.2513 34.4769 24.7518 35.4759 23.7527C36.4749 22.7037 36.9745 20.6806 36.9745 17.6834C36.9745 14.6363 36.4749 12.6132 35.4759 11.6141C34.4769 10.615 32.6786 10.1155 30.0812 10.1155H17.7931V25.2513Z" fill="white"/>
+                                            </svg>
+                                        ) : personCurrency?.symbol}
                                         {' '}
                                         {Math.round(totalAmountInDollars * (currenciesValues['USD'][personCurrency?.code || ''] || 0)) + otherAmount}
                                         {' '}
                                         {personCurrency?.code}
                                     </div>
                                     <div className="city-travel-info-top__right__subtitle">
-                                        {selectedCityData?.currency?.symbol}
+                                        {selectedCityData?.currency?.symbol === '₽' ? (
+                                            <svg width="12" height="12" viewBox="0 0 49 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fillRule="evenodd" clipRule="evenodd" d="M17.7931 35.2919H29.6316C33.2281 35.2919 36.425 34.6175 39.2223 33.2688C42.0196 31.8701 44.1924 29.872 45.7409 27.2744C47.3394 24.6269 48.1386 21.4299 48.1386 17.6834C48.1386 13.9369 47.3394 10.7649 45.7409 8.16734C44.1924 5.51982 42.0196 3.49672 39.2223 2.09803C36.425 0.699344 33.2281 0 29.6316 0H17.7931H10.5252H6.55401V25.2513H0.635269V35.2919H6.55401V38.0111H0.603516V46.857H6.55401V50.2029H17.7931V46.857H32.221V38.0111H17.7931V35.2919ZM17.7931 25.2513H30.0812C32.6786 25.2513 34.4769 24.7518 35.4759 23.7527C36.4749 22.7037 36.9745 20.6806 36.9745 17.6834C36.9745 14.6363 36.4749 12.6132 35.4759 11.6141C34.4769 10.615 32.6786 10.1155 30.0812 10.1155H17.7931V25.2513Z" fill="white"/>
+                                            </svg>
+                                        ) : selectedCityData?.currency?.symbol}
                                         {' '}
                                         {Math.round(totalAmountInDollars * (currenciesValues['USD'][selectedCityData?.currency?.code || ''] || 0)) + otherAmountInCountryCurrency}
                                         {' '}
@@ -542,6 +595,15 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
                     citizenship={citizenship}
                      setCitizenship={setCitizenship}
                     onDone={toggleCitizenshipPopup}
+                />
+
+                <CurrencyPopup
+                    isOpen={isPersonCurrencyPopupOpen}
+                    isClosing={isPersonCurrencyPopupClosing}
+                    popupRef={personCurrencyPopupRef}
+                    selectedCurrency={personCurrency}
+                    setSelectedCurrency={setPersonCurrency}
+                    onDone={togglePersonCurrencyPopup}
                 />
             </div>
         </Layout>
