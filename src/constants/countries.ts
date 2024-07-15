@@ -182,7 +182,7 @@ export const countries = [
     { name: 'Ukraine', country: 'ua', flag: '🇺🇦', languageCode: 'uk-UA' }, // Украинский для Украины
     { name: 'United Arab Emirates', country: 'ae', flag: '🇦🇪', languageCode: 'ar-AE' }, // Арабский для ОАЭ
     { name: 'United Kingdom', country: 'gb', flag: '🇬🇧', languageCode: 'en-GB' }, // Английский для Великобритании
-    { name: 'United States of America', country: 'us', flag: '🇺🇸', languageCode: 'en-US' }, // Английский для США
+    { name: 'USA', country: 'us', flag: '🇺🇸', languageCode: 'en-US' }, // Английский для США
     { name: 'Uruguay', country: 'uy', flag: '🇺🇾', languageCode: 'es-UY' }, // Испанский для Уругвая
     { name: 'Uzbekistan', country: 'uz', flag: '🇺🇿', languageCode: 'uz-UZ' }, // Узбекский для Узбекистана
     { name: 'Vanuatu', country: 'vu', flag: '🇻🇺', languageCode: 'bi-VU' }, // Бислама для Вануату

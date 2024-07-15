@@ -6807,7 +6807,7 @@ const asiaDestinations =  [
 const america = [
      {
       "Rank": 1,
-      "Destination": "New York City",
+      "Destination": "New York",
       "Country": "USA",
       "1* Hotel": "100",
       "2* Hotel": "150",

@@ -19,6 +19,7 @@ import ProfilePopup from "./ProfilePopup";
 import CitizenshipPopup from "./CitizenshipPopup";
 import {SectionTypeWrapper} from "./SectionTypeWrapper";
 import {
+    ESIM_FIELDS_NAMES,
     generateAiraloUrl,
     generateBookingUrl,
     getCitiesOrCountriesFiltered,
@@ -129,15 +130,21 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
 
     const totalAmountInDollars = useMemo(() => {
         const selectedTypes = Object.values(selectedSections)
-        const totalAmountForOneDay =  Object.entries(selectedCityData?.sections || {}).reduce((acc, next) => {
+        const {totalAmountForOneDay, esimAmount} =  Object.entries(selectedCityData?.sections || {}).reduce((acc, next) => {
             const [sectionTypeName, value] = next
             if (selectedTypes.includes(sectionTypeName)) {
                 const amountValue = value === '—' ? 0 : value
-                acc = acc + Number(amountValue)
+                const isSim = ESIM_FIELDS_NAMES.includes(sectionTypeName)
+                if (isSim) {
+                    acc.esimAmount = acc.esimAmount + Number(amountValue)
+                } else {
+                    acc.totalAmountForOneDay = acc.totalAmountForOneDay + Number(amountValue)
+                }
             }
             return acc
-        }, 0)
-        return totalAmountForOneDay * daysBetween
+        }, { totalAmountForOneDay: 0, esimAmount: 0})
+
+        return (totalAmountForOneDay * daysBetween) + esimAmount
     }, [selectedSections, selectedCityData, daysBetween])
 
     const otherAmountInCountryCurrency = useMemo(() => {

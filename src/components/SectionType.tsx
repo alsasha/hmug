@@ -43,7 +43,7 @@ type Props = {
 
 const AccommodationDropdown = ({
     title, icon, description,
-    subtitles, siteType, siteUrl, svg, selectedCityData,
+    subtitles, siteType, svg, selectedCityData,
     personCurrency, selectedSections, setSelectedSections,
     daysBetween, currenciesValues, otherAmount, setOtherAmount, otherAmountInCountryCurrency,
     onBookingClick, onAiraloClick, onUberClick
@@ -89,7 +89,7 @@ const AccommodationDropdown = ({
         return 0
     }, [selectedSections, title])
 
-    const amountForAllDaysInDollars = sectionAmountInDollars * daysBetween
+    const amountForAllDaysInDollars = sectionAmountInDollars * (title === 'eSIM with data' ? 1 : daysBetween)
 
     const dropDownPrice = Math.round(amountForAllDaysInDollars * (currenciesValues['USD'][personCurrency?.code || ''] || 0))
 
@@ -171,7 +171,9 @@ const AccommodationDropdown = ({
                         </div>
                     )}
 
-                    <div className="dropdown-description">{description}</div>
+                    <div className="dropdown-description">
+                        {isOpen ? description : selectedSections?.[title as SectionTypes]}
+                    </div>
                     <span className="dropdown-euro">
                         {selectedCityData?.currency?.symbol === '₽' ? (
                             <svg width="10" height="10" viewBox="0 0 49 51" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -219,7 +221,7 @@ const AccommodationDropdown = ({
                                         {selectedCityData?.sections?.[type] === '—' ? (
                                             '—'
                                         ) : (
-                                            Math.round(Number(selectedCityData?.sections?.[type] === '—' ? 0 : selectedCityData?.sections?.[type] || 0) * (currenciesValues['USD'][personCurrency?.code || ''] || 0))
+                                            Math.round(Number(selectedCityData?.sections?.[type] === '—' ? 0 : selectedCityData?.sections?.[type] || 0) * (currenciesValues['USD'][personCurrency?.code || ''] || 0) * (title === 'eSIM with data' ? 1 : daysBetween))
                                         )}
                                 </span>
                                 </li>

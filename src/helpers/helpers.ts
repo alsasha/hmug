@@ -33,6 +33,8 @@ export const ESIM_DESTINATION_FIELDS = {
     '25 GB': 'SIM 20GB',
 }
 
+export const ESIM_FIELDS_NAMES = ['5 GB', '10 GB', '25 GB']
+
 export const FOOD_DESTINATION_FIELDS = {
     'Fast-food': 'Daily Fast-Food',
     'Casual dining': 'Daily Casual Dining',

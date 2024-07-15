@@ -1483,7 +1483,7 @@ export const currenciesWithCountries = [
         "flag": "🇬🇧"
     },
     {
-        "name": "United States",
+        "name": "USA",
         "country": "US",
         "currency": "US Dollar",
         "symbol": "$",
