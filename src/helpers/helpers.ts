@@ -1,4 +1,4 @@
-import {asiaDestinations, europe} from "../constants/destinations";
+import {allDestinations} from "../constants/destinations";
 import {currenciesWithCountries} from "../constants/currenciesWithCountries";
 import {countries} from "../constants/countries";
 
@@ -90,9 +90,7 @@ export const getCityData = (inputValue: string) => {
         return ''
     }
     const normalizedCity = inputValue.trim().toLowerCase();
-    const europeCity = europe.find(cityObj => cityObj.Destination.toLowerCase() === normalizedCity);
-    const asiaCity = asiaDestinations.find(cityObj => cityObj.Destination.toLowerCase() === normalizedCity);
-    const foundCity = europeCity || asiaCity
+    const foundCity = allDestinations.find(cityObj => cityObj.Destination.toLowerCase() === normalizedCity);
 
     if (foundCity) {
         const currency = currenciesWithCountries.find(({ name }) => name === foundCity.Country)
@@ -117,6 +115,18 @@ export const getCityData = (inputValue: string) => {
     }
 
     return ''
+}
+
+export const getCitiesOrCountriesFiltered = (inputValue: string) => {
+    if (!inputValue) {
+        return []
+    }
+    const normalizedCity = inputValue.trim().toLowerCase();
+    const foundCountries = allDestinations.filter(cityObj => cityObj.Country.toLowerCase() === normalizedCity);
+    const foundCities = allDestinations.filter(cityObj => cityObj.Destination.toLowerCase().startsWith(normalizedCity));
+    const countries = foundCountries.slice(0, 3)
+    const cities = foundCities.slice(0, 3)
+    return countries.length ? countries : cities
 }
 
 interface BookingSearchParams {

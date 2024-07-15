@@ -1,4 +1,4 @@
-import React, {useState, useRef, Ref, ChangeEvent} from 'react';
+import React, {useState, useRef, useEffect, Ref, ChangeEvent} from 'react';
 import './CityInput.css';
 import {cities} from "../constants/cities"; // Импортируем файл CSS
 import planeIcon from '../assets/planeIcon.svg';
@@ -10,26 +10,124 @@ type Props = {
     handleSubmit: () => void
     errorMessage: string
     isResultState: boolean
+    isShowFilteredCitiesAndCountries: boolean
+    setIsShowFilteredCitiesAndCountries: (val: boolean) => void
     handleClear: () => void
+    filteredCitiesAndCountries: Record<string, string | number>[]
+    handleSelectCity: (value: Record<string, string | number>) => void
+    handleFocus: () => void
 }
 
-const CityInput = ({ inputRef, inputValue, handleChange, handleSubmit, errorMessage, isResultState, handleClear }: Props)  => {
+const citiesPlaceholder = [
+    "New York", "Los Angeles", "Chicago", "Houston", "Phoenix",
+    "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose"
+];
+
+const CityInput = ({ inputRef, inputValue, handleChange, handleSubmit, errorMessage, isResultState, handleClear, filteredCitiesAndCountries, handleSelectCity, handleFocus, isShowFilteredCitiesAndCountries, setIsShowFilteredCitiesAndCountries }: Props)  => {
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             handleSubmit()
         }
     };
+
+    const [placeholder, setPlaceholder] = useState('');
+    const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+
+    const wrapperRef = useRef<HTMLDivElement>(null);
+
+    const handleClickOutside = (event: MouseEvent) => {
+        if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+            setIsShowFilteredCitiesAndCountries(false)
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    const stopPlaceholderAnimation = () => {
+        // @ts-ignore
+            clearInterval(intervalRef?.current);
+            intervalRef.current = null;
+        setPlaceholder('');
+    };
+
+    // console.log('===>placeholder', placeholder)
+
+    const onFocus = () => {
+        // console.log('===>onFocus')
+        // stopPlaceholderAnimation();
+        handleFocus()
+    }
+
+    const handleBlur = () => {
+        // console.log('===>handleBlur')
+        console.log('===>handleBlur inputValue', inputValue)
+        if (!inputValue && !intervalRef.current) {
+            startPlaceholderAnimation();
+        }
+    };
+
+    const startPlaceholderAnimation = () => {
+        console.log('===>startPlaceholderAnimation')
+        let cityIndex = 0;
+        let charIndex = 0;
+        let adding = true;
+
+        intervalRef.current = setInterval(() => {
+            if (adding) {
+                setPlaceholder(prev => prev + citiesPlaceholder[cityIndex][charIndex]);
+                charIndex += 1;
+                if (charIndex === citiesPlaceholder[cityIndex].length) {
+                    adding = false;
+                }
+            } else {
+                setPlaceholder(prev => {
+                    if (prev.length === 0) {
+                        charIndex = 0;
+                        cityIndex = (cityIndex + 1) % citiesPlaceholder.length;
+                        adding = true;
+                        return '';
+                    }
+                    return prev.slice(0, -1);
+                });
+            }
+        }, 150);
+    };
+
+    useEffect(() => {
+        if (!inputValue) {
+            startPlaceholderAnimation();
+        } else {
+            stopPlaceholderAnimation();
+        }
+    }, [inputValue]);
+
+    useEffect(() => {
+        return () => {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+            }
+        };
+    }, []);
+
     return (
         <>
-            <div className="city-input-container">
+            <div className="city-input-container" ref={wrapperRef}>
                 <input
                     ref={inputRef}
                     type="text"
                     value={inputValue}
                     onChange={handleChange}
                     onKeyDown={handleKeyDown}
-                    placeholder="Enter city"
-                    className="city-input"
+                    onFocus={onFocus}
+                    onBlur={handleBlur}
+                    placeholder={placeholder}
+                    className={`city-input ${filteredCitiesAndCountries?.length && isShowFilteredCitiesAndCountries ? 'is-suggestions' : ''} `}
                 />
                 {isResultState ? (
                     <>
@@ -58,6 +156,15 @@ const CityInput = ({ inputRef, inputValue, handleChange, handleSubmit, errorMess
                     <button onClick={handleSubmit} className="submit-button">
                         <img src={planeIcon} alt="plane icon"/>
                     </button>
+                )}
+                {Boolean(filteredCitiesAndCountries?.length) && isShowFilteredCitiesAndCountries && (
+                    <ul className="suggestions-list">
+                        {filteredCitiesAndCountries.map((suggestion, index) => (
+                            <li key={index} onClick={() => handleSelectCity(suggestion)} className="suggestion-item">
+                                {suggestion.Destination}, {suggestion.Country}
+                            </li>
+                        ))}
+                    </ul>
                 )}
             </div>
             {errorMessage && <p className="error-message">{errorMessage}</p>}

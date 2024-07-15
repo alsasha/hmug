@@ -12,7 +12,13 @@ import Banners from "./Banners";
 import ProfilePopup from "./ProfilePopup";
 import CitizenshipPopup from "./CitizenshipPopup";
 import {SectionTypeWrapper} from "./SectionTypeWrapper";
-import {generateAiraloUrl, generateBookingUrl, getCityData, getUberUrl} from "../helpers/helpers";
+import {
+    generateAiraloUrl,
+    generateBookingUrl,
+    getCitiesOrCountriesFiltered,
+    getCityData,
+    getUberUrl
+} from "../helpers/helpers";
 import {currenciesWithCountries} from "../constants/currenciesWithCountries";
 import {initialSectionTypesByClass} from "../constants/initialSectionTypes";
 import {ConversionResult} from "../services/services";
@@ -68,6 +74,9 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
 
     const [otherAmount, setOtherAmount] = useState(0)
 
+    const [filteredCitiesAndCountries, setFilteredCitiesAndCountries] = useState<Record<string, string | number>[]>([])
+    const [isShowFilteredCitiesAndCountries, setIsShowFilteredCitiesAndCountries] = useState(false)
+
     const onChangeSubtitleValue = () => {
         const newValue = (Number(subtitle) + 1)
         if (newValue > 3) {
@@ -82,11 +91,25 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
         // todo вопрос какие можно вводить - ?
         if (/^[a-zA-Zа-яА-Я\s-]*$/.test(value)) {
             setInputValue(value);
+            const citiesOrCountries = getCitiesOrCountriesFiltered(value)
+            setFilteredCitiesAndCountries(citiesOrCountries)
+            setIsShowFilteredCitiesAndCountries(true)
             if (errorMessage) {
                 setErrorMessage('')
             }
         }
     };
+
+    const handleSelectCity = (value: Record<string, string | number>) => {
+        console.log('value', value)
+        setInputValue(value.Destination.toString() || '');
+        setFilteredCitiesAndCountries([])
+        setIsShowFilteredCitiesAndCountries(false)
+    }
+
+    const handleFocusCityInput = () => {
+        setIsShowFilteredCitiesAndCountries(true)
+    }
 
     const personCurrency = useMemo(() => {
         return currenciesWithCountries.find(({ name }) => name === citizenship?.name)
@@ -223,6 +246,8 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
     const handleClear = () => {
         // todo спросить как должно работать ?
         setInputValue('')
+        setFilteredCitiesAndCountries([])
+        setIsShowFilteredCitiesAndCountries(false)
         setIsResultState(false)
         onChangeSubtitleValue()
     }
@@ -351,6 +376,11 @@ const Home = ({ currenciesValues, setCurrenciesValues, fetchConversion, activeTa
                         errorMessage={errorMessage}
                         isResultState={isResultState}
                         handleClear={handleClear}
+                        filteredCitiesAndCountries={filteredCitiesAndCountries}
+                        handleSelectCity={handleSelectCity}
+                        handleFocus={handleFocusCityInput}
+                        isShowFilteredCitiesAndCountries={isShowFilteredCitiesAndCountries}
+                        setIsShowFilteredCitiesAndCountries={setIsShowFilteredCitiesAndCountries}
                     />
                     <div className="header-icon-buttons">
                         <div ref={datesRef}
