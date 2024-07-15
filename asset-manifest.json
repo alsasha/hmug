@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/hmug/static/css/main.568b6005.css",
-    "main.js": "/hmug/static/js/main.28cbb6d0.js",
+    "main.css": "/hmug/static/css/main.b423a0ef.css",
+    "main.js": "/hmug/static/js/main.94403ed6.js",
     "static/js/453.02052fa6.chunk.js": "/hmug/static/js/453.02052fa6.chunk.js",
     "static/media/marketingBanner1.png": "/hmug/static/media/marketingBanner1.9ce6c18f43989429d2bd.png",
     "static/media/ClashGrotesk-Variable.ttf": "/hmug/static/media/ClashGrotesk-Variable.6eccb344b604e67e2145.ttf",
@@ -16,12 +16,12 @@
     "index.html": "/hmug/index.html",
     "static/media/BannerIcon3.svg": "/hmug/static/media/BannerIcon3.73a74980ea03992a1544affafaf34433.svg",
     "static/media/profileIcon.svg": "/hmug/static/media/profileIcon.4189d5797c311dd056b4f55e123b6113.svg",
-    "main.568b6005.css.map": "/hmug/static/css/main.568b6005.css.map",
-    "main.28cbb6d0.js.map": "/hmug/static/js/main.28cbb6d0.js.map",
+    "main.b423a0ef.css.map": "/hmug/static/css/main.b423a0ef.css.map",
+    "main.94403ed6.js.map": "/hmug/static/js/main.94403ed6.js.map",
     "453.02052fa6.chunk.js.map": "/hmug/static/js/453.02052fa6.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.568b6005.css",
-    "static/js/main.28cbb6d0.js"
+    "static/css/main.b423a0ef.css",
+    "static/js/main.94403ed6.js"
   ]
 }
