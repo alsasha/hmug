@@ -236,3 +236,7 @@
   position: relative;
   z-index: 0;
 }
+
+.CalendarDay__blocked_out_of_range, .CalendarDay__blocked_out_of_range:active, .CalendarDay__blocked_out_of_range:hover {
+  color: #9EA9B7 !important;
+}
