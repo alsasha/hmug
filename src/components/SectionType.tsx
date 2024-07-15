@@ -172,7 +172,7 @@ const AccommodationDropdown = ({
                     )}
 
                     <div className="dropdown-description">
-                        {isOpen ? description : selectedSections?.[title as SectionTypes]}
+                        {isOpen || isOther ? description : selectedSections?.[title as SectionTypes]}
                     </div>
                     <span className="dropdown-euro">
                         {selectedCityData?.currency?.symbol === '₽' ? (
