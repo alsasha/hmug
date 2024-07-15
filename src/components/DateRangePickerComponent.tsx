@@ -57,7 +57,6 @@ const DateRangePickerComponent = ({ startDate, setStartDate, endDate, setEndDate
                 onFocusChange={handleFocusChange}
                 orientation="vertical"
                 numberOfMonths={12}
-                verticalHeight={400}
                 firstDayOfWeek={1}
                 // onGetPrevScrollableMonths={() => {
                 // }}
